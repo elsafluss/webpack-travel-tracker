@@ -1,10 +1,36 @@
+/* eslint-disable max-len */
 // This is the JavaScript entry file - your code begins here
 // Do not delete or rename this file ********
 
 // An example of how you tell webpack to use a CSS (SCSS) file
 import './css/base.scss';
+import {
+  getTravelers,
+  getATraveler,
+  getTrips,
+  getDestinations,
+} from "./util.js"
 
 // An example of how you tell webpack to use an image (also need to link to it in the index.html)
 import './images/turing-logo.png'
 
-console.log('This is the JavaScript entry file - your code begins here.');
+window.onload = onStartup()
+
+function onStartup() {
+  const travelersResults = getTravelers()
+    .then((travelers) => {
+      console.log(travelers)
+    })
+    .catch((error) => console.log(error))
+  const travelerResults = getATraveler(1) // pass in traveler's id
+    .then((traveler) => {
+      console.log(traveler)
+    })
+  const tripsResults = getTrips() 
+    .then((trip) => {
+      console.log(trip)
+    })
+  const destinationsResults = getDestinations()
+    .then((destination) =>
+      console.log(destination))
+}

@@ -25,7 +25,7 @@ function onStartup() {
       return travelers
     })
     .catch((error) => console.log('error getting travelers', error))
-  const travelerResults = getATraveler(userID) // pass in traveler's id
+  const travelerResults = getATraveler(userID)
     .then((traveler) => {
       myNameDisplay.innerText = traveler.name
       return traveler
@@ -33,11 +33,7 @@ function onStartup() {
     .catch((error) => console.log("error getting traveler", error))
   const tripsResults = getTrips()
     .then((trips) => {
-      let tripsDates = trips.trips
-        .filter((trips) => trips.userID === userID)
-        .map((trip) => trip.date)
-        .sort()
-      tripsDates.forEach((trip) => {
+      sortMyTrips(trips).forEach((trip) => {
         displayTrips(trip)
       })
       return trips
@@ -58,9 +54,18 @@ function onStartup() {
     let traveler = data[1]
     let destinations = data[2].destinations
     let trips = data[3].trips
-    getDestinationData(destinations)
-    getTripData(trips)
+    let destinationData = getDestinationData(destinations)
+    let tripData = getTripData(trips)
+    combineDestinationsAndTrips(destinationData, tripData)
   })
+}
+
+function sortMyTrips(trips) {
+  let tripsDates = trips.trips
+    .filter((trips) => trips.userID === userID)
+    .map((trip) => trip.date)
+    .sort()
+  return tripsDates
 }
 
 function displayTrips(trip) {
@@ -73,7 +78,7 @@ function displayTrips(trip) {
 }
 
 function getDestinationData(destinations) {
-let destinationData = destinations.map((destinations) => [
+  let destinationData = destinations.map((destinations) => [
     destinations.id,
     destinations.estimatedLodgingCostPerDay,
     destinations.estimatedFlightCostPerPerson,
@@ -85,9 +90,9 @@ let destinationData = destinations.map((destinations) => [
       lodgingPerDay: value[1],
       flightCost: value[2],
     })
-    return total
+    return aggregateDestinationData
   }, {})
-  console.log(aggregateDestinationData)
+  return aggregateDestinationData
 }
 
 function getTripData(trips) {
@@ -102,7 +107,21 @@ function getTripData(trips) {
       tripDuration: value[2],
       travelerCount: value[3],
     })
-    return total
+    return aggregateTripData
   }, {})
-  console.log(aggregateTripData)
+  return aggregateTripData
+}
+
+function combineDestinationsAndTrips(destinations, trips) {
+  let aggregateTravelData = [] // objects from destinations that match this user
+  aggregateTravelData = destinations.filter(destination => {
+    let destID = destination.destinationID
+    let matchingTrip = trips.find(trip => trip.destinationID === destID)
+    if (matchingTrip) {
+      aggregateTravelData.push(destination)
+    }
+    return matchingTrip
+  })
+  console.log(aggregateTravelData)
+  return aggregateTravelData
 }

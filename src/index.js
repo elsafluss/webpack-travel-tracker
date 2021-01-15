@@ -55,8 +55,17 @@ function onStartup() {
     let destinations = data[2].destinations
     let trips = data[3].trips
     let destinationData = getDestinationData(destinations)
-    let tripData = getTripData(trips)
-    combineDestinationsAndTrips(destinationData, tripData)
+    let aggregateTripData = getTripData(trips)
+    let specificDestinationData = getDestinationDataForTheseTrips(
+      destinationData,
+      aggregateTripData
+    )
+    let lodgingCost = calculateTripCost(specificDestinationData, aggregateTripData)
+    console.log(lodgingCost)
+    let flightCost = calculateFlightCost(
+      specificDestinationData,
+      aggregateTripData
+    )
   })
 }
 
@@ -83,16 +92,16 @@ function getDestinationData(destinations) {
     destinations.estimatedLodgingCostPerDay,
     destinations.estimatedFlightCostPerPerson,
   ])
-  let aggregateDestinationData = []
+  let allDestinationData = []
   destinationData.reduce((total, value) => {
-    aggregateDestinationData.push({
+    allDestinationData.push({
       destinationID: value[0],
       lodgingPerDay: value[1],
       flightCost: value[2],
     })
-    return aggregateDestinationData
+    return allDestinationData
   }, {})
-  return aggregateDestinationData
+  return allDestinationData
 }
 
 function getTripData(trips) {
@@ -112,16 +121,42 @@ function getTripData(trips) {
   return aggregateTripData
 }
 
-function combineDestinationsAndTrips(destinations, trips) {
-  let aggregateTravelData = [] // objects from destinations that match this user
-  aggregateTravelData = destinations.filter(destination => {
+function getDestinationDataForTheseTrips(destinations, trips) {
+  let specificDestinationData = []
+  specificDestinationData = destinations.filter(destination => {
     let destID = destination.destinationID
     let matchingTrip = trips.find(trip => trip.destinationID === destID)
     if (matchingTrip) {
-      aggregateTravelData.push(destination)
+      specificDestinationData.push(destination)
     }
     return matchingTrip
   })
-  console.log(aggregateTravelData)
-  return aggregateTravelData
+  return specificDestinationData
+}
+
+function calculateTripCost(specificDestinationData, aggregateTripData) {
+  let lodgingCost = 0
+  specificDestinationData.filter(destination => {
+    let matchingTrip = aggregateTripData.find(trip => trip.destinationID === destination.destinationID)
+    if (matchingTrip) {
+      let numberOfPeople = matchingTrip.travelerCount
+      lodgingCost += (destination.lodgingPerDay * matchingTrip.tripDuration) * numberOfPeople
+    }
+    return lodgingCost
+  })
+  return lodgingCost
+}
+
+function calculateFlightCost(specificDestinationData, aggregateTripData) {
+  let flightCost = 0
+  specificDestinationData.filter((destination) => {
+    let matchingTrip = aggregateTripData.find(
+      (trip) => trip.destinationID === destination.destinationID
+    )
+    if (matchingTrip) {
+      flightCost += destination.flightCost * matchingTrip.travelerCount
+    }
+    return flightCost
+  })
+  return flightCost
 }

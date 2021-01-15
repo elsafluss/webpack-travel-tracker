@@ -1,5 +1,5 @@
 /* eslint-disable max-len */
-const userID = 3
+const userID = 2
 import './css/base.scss';
 import {
   getTravelers,
@@ -32,17 +32,11 @@ function onStartup() {
     .catch((error) => console.log(error))
   const tripsResults = getTrips()
     .then((trips) => {
-      // console.log('LIST OF ALL TRIPS', trips.trips)
-      // console.log('keys', Object.keys(trips))
       let theseTrips = trips.trips.filter(trips => trips.userID === userID)
-        .map(trip => trip.date)
+        .map(trip => trip.date).sort()
       theseTrips.forEach(trip => {
-        let node = document.createElement('p')
-        let textNode = document.createTextNode(`${trip}`)
-        node.appendChild(textNode)
-        myTripsDisplay.appendChild(node)
+        displayTrips(trip)
       })
-        
     })
     .catch((error) => console.log(error))
   const destinationsResults = getDestinations()
@@ -50,3 +44,11 @@ function onStartup() {
     .catch((error) => console.log(error))
 }
 
+function displayTrips(trip) {
+  let button = document.createElement("button")
+  let p = document.createElement("p")
+  let textNode = document.createTextNode(`${trip} `)
+  button.appendChild(textNode)
+  myTripsDisplay.appendChild(button)
+  myTripsDisplay.appendChild(p)
+}

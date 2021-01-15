@@ -4,7 +4,11 @@
 @import 'desktop';
 
 body {
-  background: $primary-background;
+  background-image: url("../images/background-image.jpg");
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  width: 100vw;
+  height: 100vh;
   font-family: $font;
   color: $highlight;
 }

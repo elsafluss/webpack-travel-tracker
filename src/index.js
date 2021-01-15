@@ -26,11 +26,13 @@ function onStartup() {
     .then((traveler) => {
       console.log(traveler)
     })
-  const tripsResults = getTrips() 
+    .catch((error) => console.log(error))
+  const tripsResults = getTrips()
     .then((trip) => {
       console.log(trip)
     })
+    .catch((error) => console.log(error))
   const destinationsResults = getDestinations()
-    .then((destination) =>
-      console.log(destination))
+    .then((destination) => console.log(destination))
+    .catch((error) => console.log(error))
 }

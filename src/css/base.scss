@@ -3,12 +3,13 @@
 @import 'tablet';
 @import 'desktop';
 
+
 body {
-  background-image: url("../images/background-image.jpg");
-  background-repeat: no-repeat;
+  background-image: url("../images/background-desert.png");
+  background-repeat: space;
   background-attachment: fixed;
-  width: 100vw;
-  height: 100vh;
+  background-size: 100%, contain;
+  margin: auto;
   font-family: $font;
   color: $highlight;
 }

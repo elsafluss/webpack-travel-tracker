@@ -1,7 +1,39 @@
-$dark: #2d3142ff;
-$medium: #788585ff;
-$light: #f7f0f5ff;
-$highlight: #ce796bff;
+$light: #DFCEBC;
+$medium: #9495A9;
+$dark: darken($medium, 40%);
+$highlight: #AA744E;
 $lowlight: #899878ff;
-$primary-background: radial-gradient(circle, $dark 0%, $medium 100%);
-$font: 'Noto Sans HK', sans-serif;
+// $primary-background: radial-gradient(circle, $dark 0%, $medium 100%);
+$font: 'Noto Sans HK',
+sans-serif;
+
+
+.light {
+    background-color: $light;
+    height: 50px;
+    width: 50px;
+}
+
+.medium {
+    background-color: $medium;
+    height: 50px;
+    width: 50px;
+}
+
+.dark {
+    background-color: $dark;
+    height: 50px;
+    width: 50px;
+}
+
+.highlight {
+    background-color: $highlight;
+    height: 50px;
+    width: 50px;
+}
+
+.lowlight {
+    background-color: $lowlight;
+    height: 50px;
+    width: 50px;
+}

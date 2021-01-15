@@ -1,5 +1,5 @@
 /* eslint-disable max-len */
-const userID = 2
+const userID = 29
 import './css/base.scss';
 import {
   getTravelers,
@@ -55,6 +55,7 @@ function onStartup() {
     let destinations = data[2].destinations
     let trips = data[3].trips
     let destinationData = getDestinationData(destinations)
+    fillDestinationList(destinationData)
     let aggregateTripData = getTripData(trips)
     let specificDestinationData = getDestinationDataForTheseTrips(
       destinationData,
@@ -92,6 +93,7 @@ function getDestinationData(destinations) {
     destinations.id,
     destinations.estimatedLodgingCostPerDay,
     destinations.estimatedFlightCostPerPerson,
+    destinations.destination,
   ])
   let allDestinationData = []
   destinationData.reduce((total, value) => {
@@ -99,6 +101,7 @@ function getDestinationData(destinations) {
       destinationID: value[0],
       lodgingPerDay: value[1],
       flightCost: value[2],
+      destinationName: value[3],
     })
     return allDestinationData
   }, {})
@@ -161,3 +164,20 @@ function calculateFlightCost(specificDestinationData, aggregateTripData) {
   })
   return flightCost * 1.1
 }
+
+function fillDestinationList(destinationData) {
+  let sortedByName = destinationData.sort((a, b) => {
+    if (a.destinationName < b.destinationName) {
+      return -1
+    }
+  })
+  let listOfDestinationNames = sortedByName.map((destination) => destination.destinationName)
+  listOfDestinationNames.forEach(function (destination) {
+    let opt = document.createElement('option')
+    opt.innerHTML = destination
+    opt.value = destination
+    document.querySelector(".create-destination").appendChild(opt)
+  })
+  return listOfDestinationNames
+}
+

@@ -33,17 +33,21 @@
       <article class="amount-spent card">
         <div class="card-header">how much I've spent</div>
         <img src="./images/money.svg" alt="money">
-        <div class="card-text total-spent">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ipsum veniam molestias
-          recusandae reiciendis, non, sunt sequi, dolorem natus adipisci autem dolorum minus. Suscipit placeat deserunt
-          neque asperiores quas nulla rem!</div>
-        <button class="see-more btn">see more</button>
+        <div class="card-text total-spent"></div>
       </article>
       <article class="create-trip card">
         <div class="card-header">create a trip</div>
         <img src="./images/suitcase.svg" alt="money">
-        <div class="card-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Consectetur iusto ullam
-          incidunt, animi, eum eaque voluptates placeat ea, autem expedita molestias. Provident natus rerum cupiditate,
-          exercitationem error labore repellendus rem.</div>
+        <div class="card-text">
+          <form action="submit" class="create-trip-form">
+            <input type="date" class="create-trip-date">
+            <input type="range" class="create-trip-duration">
+            <input type="number" class="create-trip-numPeople">
+            <select name="destination-list" id="" class="create-destination">
+              <option value="place">Select a destination</option>
+            </select>
+          </form>
+        </div>
         <button class="see-more btn">see more</button>
       </article>
     </section>

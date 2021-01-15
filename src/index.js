@@ -67,7 +67,7 @@ function onStartup() {
       aggregateTripData
     )
     let totalSpent = lodgingCost + flightCost
-    document.querySelector('.total-spent').innerText = `My trips cost $${totalSpent.toFixed(2)} but the memories are priceless.`
+    document.querySelector('.total-spent').innerText = `I've only spent $${totalSpent.toFixed(2)} creating priceless memories. Where should i go next?`
   })
 }
 
@@ -176,7 +176,7 @@ function fillDestinationList(destinationData) {
     let opt = document.createElement('option')
     opt.innerHTML = destination
     opt.value = destination
-    document.querySelector(".create-destination").appendChild(opt)
+    document.querySelector(".choose-destination").appendChild(opt)
   })
   return listOfDestinationNames
 }

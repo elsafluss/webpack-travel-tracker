@@ -40,10 +40,21 @@
         <img src="./images/suitcase.svg" alt="money">
         <div class="card-text">
           <form action="submit" class="create-trip-form">
-            <input type="date" class="create-trip-date">
-            <input type="range" class="create-trip-duration">
-            <input type="number" class="create-trip-numPeople">
-            <select name="destination-list" id="" class="create-destination">
+            <label for="create-trip-date">When should I leave?</label>
+            <br>
+            <input type="date" id="create-trip-date" class="create-trip-date">
+            <br><br>
+            <label for="create-trip-duration">How long is my trip?</label>
+            <br>
+            <input type="range" id="create-trip-duration" class="create-trip-duration">
+            <br><br>
+            <label for="create-trip-numPeople">How many travelers?</label>
+            <br>
+            <input type="number" id="create-trip-numPeople" class="create-trip-numPeople">
+            <br><br>
+            <label for="create-destination">Where should I go?</label>
+            <br>
+            <select name="destination-list" id="choose-destination" class="choose-destination">
               <option value="place">Select a destination</option>
             </select>
           </form>

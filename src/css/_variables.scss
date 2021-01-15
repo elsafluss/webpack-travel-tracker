@@ -1,56 +1,34 @@
-$light: #DFCEBC;
 $medium: #9495A9;
+$light: lighten($medium, 15%);
 $dark: darken($medium, 40%);
 $highlight: #AA744E;
 $lowlight: #899878ff;
-// $primary-background: radial-gradient(circle, $dark 0%, $medium 100%);
 $font: 'Noto Sans HK',
 sans-serif;
+$transparent: transparentize($light, .6);
+$box-shadow: 3px 3px 6px $dark;
 
 @mixin basic-button {
     border-radius: 5px;
-    // border: 2px solid $highlight;
-    background-color: $lowlight;
+    background-color: $light;
     color: $dark;
-    font-size: 200%;
-    font-weight: 700;
+    font-size: 100%;
+    font-weight: 500;
     width: auto;
-    height: auto;
+    margin: 0 1em;
+    padding: .5em;
+    border: none;
+    box-shadow: $box-shadow;
 
     &:hover {
         color: $light;
+        background-color: $highlight;
         cursor: pointer;
     }
 
     &:active {
-        background-color: $highlight;
-        // border: 2px solid $lowlight;
+        color: $dark;
+        background-color: $lowlight;
+        box-shadow: -3px -3px 5px $dark;
     }
-}
-
-.light {
-    background-color: $light;
-    color: $dark
-}
-
-.medium {
-    background-color: $medium;
-    color: $dark
-}
-
-.dark {
-    background-color: $dark;
-    color: $light
-}
-
-.highlight {
-    background-color: $highlight;
-    color: $light
-
-}
-
-.lowlight {
-    background-color: $lowlight;
-    color: $light
-
 }

@@ -1,7 +1,19 @@
+
+
 .card {
     // border: 1px solid $light;
-    box-shadow: 2px 2px 5px $dark;
-    overflow:visible; 
+    display: flex;
+    flex-direction: column;
+    box-shadow: $box-shadow;
+    overflow: visible; 
+    background-color: $transparent;
+    border-radius: 5px;
+
+    .btn {
+        width: 10em;
+        align-self: center;
+        margin: 0 auto 1em auto;
+    }
 }
 
 .card-header {
@@ -14,16 +26,27 @@
 }
 
 .card-image {
-    // border: 1px solid $light;
-    padding: 1em;
-    height: 6em;
-    margin: auto;
+    border: 1px solid $dark;
+    height: 5em;
+    margin: 0 1em 2em 1em;
     text-align: center;
+    background-color: $lowlight;
+    color: $dark;
+    border-radius: 5px;
+    border: none;
 }
 
 .card-text {
     // border: 1px solid $light;
-    height: 12em;
+    height: auto;
+    line-height: 1.6;
+    min-height: 50%;
     text-align: justify;
     padding: 1em;
+    background-color: lighten($transparent, 10%);
+    margin: 0 1em 2em 1em;
+    padding: .5em;
+    border-radius: 5px;
+
 }
+

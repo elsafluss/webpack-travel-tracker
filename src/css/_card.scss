@@ -1,18 +1,25 @@
-
-
 .card {
     // border: 1px solid $light;
     display: flex;
     flex-direction: column;
     box-shadow: $box-shadow;
-    overflow: visible; 
+    overflow: visible;
     background-color: $transparent;
     border-radius: 5px;
+    height: 125%;
 
     .btn {
         width: 10em;
         align-self: center;
         margin: 0 auto 1em auto;
+    }
+
+    img {
+        // border: 1px solid $light;
+        margin: 1em auto 2em auto;
+        height: 75px;
+        width: auto;
+
     }
 }
 
@@ -23,6 +30,7 @@
     font-weight: 500;
     font-size: 150%;
     text-align: center;
+    padding-bottom: 0;
 }
 
 .card-image {
@@ -44,9 +52,8 @@
     text-align: justify;
     padding: 1em;
     background-color: lighten($transparent, 10%);
-    margin: 0 1em 2em 1em;
+    margin: 0 1em 1em 1em;
     padding: .5em;
     border-radius: 5px;
 
 }
-

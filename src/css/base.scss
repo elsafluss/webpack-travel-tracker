@@ -2,30 +2,33 @@
 @import 'mobile';
 @import 'tablet';
 @import 'desktop';
-
+@import 'header';
+@import 'card';
 
 body {
   background-image: url("../images/background-desert.png");
-  background-repeat: space;
+  background-repeat: no-repeat;
   background-attachment: fixed;
   background-size: 100%, contain;
   margin: auto;
   font-family: $font;
   color: $dark;
-  display: flex;
-  justify-content: center;
-  align-items: center;
 }
 
-div {
-  height: 100px;
-  width: 100px;
-  margin: 10px;
+.container {
+  // border: 1px solid $light;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 2em;
+  width: 90%;
+  margin: 2em auto;
+}
+
+.traveler-name {
+  // border: 1px solid $light;
+  grid-column: 1 / 4;
+  margin: auto;
   text-align: center;
-  padding: 5px;
-}
-
-.button {
-  @include basic-button();
-  margin: 10px;
+  font-size: 400%;
+  font-weight: 900;
 }

@@ -18,6 +18,6 @@ export const getTrips = () => {
 
 export const getDestinations = () => {
   return fetch("http://localhost:3001/api/v1/destinations")
-    .then((resfponse) => response.json())
+    .then((response) => response.json())
     .then((data) => data)
 }

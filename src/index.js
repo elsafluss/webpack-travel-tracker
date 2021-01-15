@@ -61,11 +61,12 @@ function onStartup() {
       aggregateTripData
     )
     let lodgingCost = calculateTripCost(specificDestinationData, aggregateTripData)
-    console.log(lodgingCost)
     let flightCost = calculateFlightCost(
       specificDestinationData,
       aggregateTripData
     )
+    let totalSpent = lodgingCost + flightCost
+    document.querySelector('.total-spent').innerText = `My trips cost $${totalSpent.toFixed(2)} but the memories are priceless.`
   })
 }
 
@@ -144,7 +145,7 @@ function calculateTripCost(specificDestinationData, aggregateTripData) {
     }
     return lodgingCost
   })
-  return lodgingCost
+  return lodgingCost * 1.1
 }
 
 function calculateFlightCost(specificDestinationData, aggregateTripData) {
@@ -158,5 +159,5 @@ function calculateFlightCost(specificDestinationData, aggregateTripData) {
     }
     return flightCost
   })
-  return flightCost
+  return flightCost * 1.1
 }

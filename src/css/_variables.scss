@@ -7,33 +7,50 @@ $lowlight: #899878ff;
 $font: 'Noto Sans HK',
 sans-serif;
 
+@mixin basic-button {
+    border-radius: 5px;
+    // border: 2px solid $highlight;
+    background-color: $lowlight;
+    color: $dark;
+    font-size: 200%;
+    font-weight: 700;
+    width: auto;
+    height: auto;
+
+    &:hover {
+        color: $light;
+        cursor: pointer;
+    }
+
+    &:active {
+        background-color: $highlight;
+        // border: 2px solid $lowlight;
+    }
+}
 
 .light {
     background-color: $light;
-    height: 50px;
-    width: 50px;
+    color: $dark
 }
 
 .medium {
     background-color: $medium;
-    height: 50px;
-    width: 50px;
+    color: $dark
 }
 
 .dark {
     background-color: $dark;
-    height: 50px;
-    width: 50px;
+    color: $light
 }
 
 .highlight {
     background-color: $highlight;
-    height: 50px;
-    width: 50px;
+    color: $light
+
 }
 
 .lowlight {
     background-color: $lowlight;
-    height: 50px;
-    width: 50px;
+    color: $light
+
 }

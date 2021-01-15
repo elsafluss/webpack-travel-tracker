@@ -11,6 +11,21 @@ body {
   background-size: 100%, contain;
   margin: auto;
   font-family: $font;
-  color: $highlight;
+  color: $dark;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
+div {
+  height: 100px;
+  width: 100px;
+  margin: 10px;
+  text-align: center;
+  padding: 5px;
+}
+
+.button {
+  @include basic-button();
+  margin: 10px;
+}

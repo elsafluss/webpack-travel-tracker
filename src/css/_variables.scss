@@ -1,0 +1,56 @@
+$light: #DFCEBC;
+$medium: #9495A9;
+$dark: darken($medium, 40%);
+$highlight: #AA744E;
+$lowlight: #899878ff;
+// $primary-background: radial-gradient(circle, $dark 0%, $medium 100%);
+$font: 'Noto Sans HK',
+sans-serif;
+
+@mixin basic-button {
+    border-radius: 5px;
+    // border: 2px solid $highlight;
+    background-color: $lowlight;
+    color: $dark;
+    font-size: 200%;
+    font-weight: 700;
+    width: auto;
+    height: auto;
+
+    &:hover {
+        color: $light;
+        cursor: pointer;
+    }
+
+    &:active {
+        background-color: $highlight;
+        // border: 2px solid $lowlight;
+    }
+}
+
+.light {
+    background-color: $light;
+    color: $dark
+}
+
+.medium {
+    background-color: $medium;
+    color: $dark
+}
+
+.dark {
+    background-color: $dark;
+    color: $light
+}
+
+.highlight {
+    background-color: $highlight;
+    color: $light
+
+}
+
+.lowlight {
+    background-color: $lowlight;
+    color: $light
+
+}

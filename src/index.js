@@ -12,6 +12,7 @@ import {
   getDestinationDataForTheseTrips,
   calculateTripCost,
   calculateFlightCost,
+  getFormData,
 } from "./data-manip.js"
 import {
   displayTrips,
@@ -34,7 +35,6 @@ import "./images/money.svg"
 import "./images/suitcase.svg"
 
 window.onload = onStartup()
-
 
 function onStartup() {
   const travelersResults = getTravelers()

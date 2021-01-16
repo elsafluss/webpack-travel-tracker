@@ -80,3 +80,13 @@ export const calculateFlightCost = (specificDestinationData, aggregateTripData) 
   })
   return flightCost * 1.1
 }
+
+export const submitForm = () => {
+    const submitButton = document.querySelector(".submit")
+    .addEventListener('click', getFormData)
+}
+
+export const getFormData = () => {
+    const selectedDate = document.querySelector('.create-trip-date').value
+    console.log(selectedDate)
+}

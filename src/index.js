@@ -50,8 +50,8 @@ function onStartup() {
     destinationsResults,
     tripsResults,
   ]).then((data) => {
-    let travelers = data[0]
-    let traveler = data[1]
+    // let travelers = data[0]
+    // let traveler = data[1]
     let destinations = data[2].destinations
     let trips = data[3].trips
     let destinationData = getDestinationData(destinations)
@@ -61,13 +61,14 @@ function onStartup() {
       destinationData,
       aggregateTripData
     )
+    // listMyTripDestinations(specificDestinationData)
     let lodgingCost = calculateTripCost(specificDestinationData, aggregateTripData)
     let flightCost = calculateFlightCost(
       specificDestinationData,
       aggregateTripData
     )
     let totalSpent = lodgingCost + flightCost
-    document.querySelector('.total-spent').innerText = `I've only spent $${totalSpent.toFixed(2)} creating priceless memories. Where should i go next?`
+    document.querySelector('.total-spent').innerText = `I've only spent $${totalSpent.toFixed(2)} creating these priceless memories.`
   })
 }
 
@@ -94,6 +95,7 @@ function getDestinationData(destinations) {
     destinations.estimatedLodgingCostPerDay,
     destinations.estimatedFlightCostPerPerson,
     destinations.destination,
+    destinations.image,
   ])
   let allDestinationData = []
   destinationData.reduce((total, value) => {
@@ -102,6 +104,7 @@ function getDestinationData(destinations) {
       lodgingPerDay: value[1],
       flightCost: value[2],
       destinationName: value[3],
+      destinationImage: value[4],
     })
     return allDestinationData
   }, {})
@@ -137,6 +140,12 @@ function getDestinationDataForTheseTrips(destinations, trips) {
   })
   return specificDestinationData
 }
+
+// listMyTripDestinations(specificDestinationData) {
+// for each destination, get the destinationName
+// create a button with that destinationName
+// clicking the button shows a picture of that place
+// }
 
 function calculateTripCost(specificDestinationData, aggregateTripData) {
   let lodgingCost = 0

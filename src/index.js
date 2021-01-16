@@ -1,5 +1,5 @@
 /* eslint-disable max-len */
-const userID = 29
+export const userID = 36
 import './css/base.scss';
 import Traveler from "./traveler.js"
 import {
@@ -16,6 +16,7 @@ import {
   displayTrips,
   displayUserName,
   fillDestinationList,
+  showThisTrip,
 } from "./dom-updates.js"
 import {
   getTravelers,
@@ -24,6 +25,7 @@ import {
   getDestinations,
 } from "./util.js"
 
+
 // how to tell webpack to use an image (also need to link to it in the index.html)
 // import './images/background-desert.png'
 // import "./images/globe.svg"
@@ -31,6 +33,7 @@ import {
 // import "./images/suitcase.svg"
 
 window.onload = onStartup()
+
 
 function onStartup() {
   const travelersResults = getTravelers()
@@ -81,10 +84,16 @@ function onStartup() {
       aggregateTripData
     )
     let totalSpent = lodgingCost + flightCost
-    let currentTraveler = createTraveler(traveler, aggregateTripData, specificDestinationData, totalSpent)
-    console.log(currentTraveler)
-    document.querySelector('.total-spent').innerText = `I've only spent $${totalSpent.toFixed(2)} creating these priceless memories.`
+    createTraveler(traveler, aggregateTripData, specificDestinationData, totalSpent)
+    // console.log(currentTraveler)
+    document.querySelector('.total-spent').innerText = `I've spent $${totalSpent.toFixed(2)} creating these priceless memories.`
   })
+    .then(() => {
+      let tripButtons = document.querySelectorAll(".show-trip")
+      tripButtons.forEach(button => {
+        button.addEventListener('click', showThisTrip)
+      })
+    })
 }
 
 function createTraveler(

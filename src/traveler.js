@@ -10,11 +10,11 @@ class Traveler {
   }
 
   sortMyTrips(trips, userID) {
-    let tripsDates = trips.trips
+    let tripsData = trips.trips
       .filter((trips) => trips.userID === userID)
-      .map((trip) => trip.date)
+    //   .map((trip) => trip.date)
       .sort()
-    return tripsDates
+    return tripsData
   }
 }
 

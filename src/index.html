@@ -53,15 +53,15 @@
           <form action="submit" class="create-trip-form">
             <label for="create-trip-date">When should I leave?</label><br>
             <input type="date" id="create-trip-date" class="create-trip-date" required><br><br>
-            <label for="create-trip-duration">How long is my trip?</label><br>
-            <input type="range" id="create-trip-duration" class="create-trip-duration" required><br><br>
+            <label for="create-trip-duration">How many days?</label><br>
+            <input type="number" id="create-trip-duration" class="create-trip-duration" min="1" max="25" value="1" required><br><br>
             <label for="create-trip-numPeople">How many travelers?</label><br>
             <input type="number" id="create-trip-numPeople" class="create-trip-numPeople" min='1' max="20" value="1" required><br><br>
             <label for="choose-destination">Where should I go?</label><br>
             <select name="destination-list" id="choose-destination" class="choose-destination" required>
               <option value="place">Select a destination</option>
             </select><br><br>
-            <input type="submit" class="submit btn" value="create trip">
+            <input type="button" class="submit-form btn" value="create trip">
             <input type="reset" class="reset btn" value="reset form">
           </form>
         </div>

@@ -1,5 +1,5 @@
 /* eslint-disable max-len */
-export const userID = 45
+export const userID = 35
 import './css/base.scss';
 import Traveler from "./traveler.js"
 import Trip from './trip.js'
@@ -7,26 +7,14 @@ import {
   sortMyTrips
 } from "./traveler.js"
 import {
-  getDestinationData,
-  getTripData,
-  getDestinationDataForTheseTrips,
-  calculateTripCost,
-  calculateFlightCost,
-  getFormData,
+  getDestinationData, getTripData, getDestinationDataForTheseTrips, calculateTripCost, calculateFlightCost, getFormData,
 } from "./data-manip.js"
 import {
-  displayTrips,
-  displayUserName,
-  fillDestinationList,
-  showThisTrip,
+  displayTrips, displayUserName, fillDestinationList, showThisTrip,
 } from "./dom-updates.js"
 import {
-  getTravelers,
-  getATraveler,
-  getTrips,
-  getDestinations,
+  getTravelers, getATraveler, getTrips, getDestinations,
 } from "./util.js"
-
 
 // how to tell webpack to use an image (also need to link to it in the index.html)
 import './images/background-desert.png'
@@ -35,6 +23,8 @@ import "./images/money.svg"
 import "./images/suitcase.svg"
 
 window.onload = onStartup()
+
+document.querySelector(".submit-form").addEventListener("click", getFormData)
 
 function onStartup() {
   const travelersResults = getTravelers()

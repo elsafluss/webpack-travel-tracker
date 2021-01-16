@@ -1,4 +1,7 @@
 /* eslint-disable max-len */
+import { userID } from "."
+import Trip from "./trip"
+
 export const getDestinationData = (destinations) => {
   let destinationData = destinations.map((destinations) => [
     destinations.id,
@@ -81,12 +84,14 @@ export const calculateFlightCost = (specificDestinationData, aggregateTripData) 
   return flightCost * 1.1
 }
 
-export const submitForm = () => {
-    const submitButton = document.querySelector(".submit")
-    .addEventListener('click', getFormData)
-}
-
 export const getFormData = () => {
-    const selectedDate = document.querySelector('.create-trip-date').value
-    console.log(selectedDate)
+  let newTrip = {}
+  newTrip.selectedDate = document.querySelector(".create-trip-date").value
+  newTrip.selectedLength = document.querySelector(".create-trip-duration").value
+  newTrip.selectedGroupSize = document.querySelector(".create-trip-numPeople").value
+  newTrip.selectedDestination = document.querySelector(".choose-destination").value
+  newTrip.userID = userID
+  let createdTrip = new Trip(newTrip)
+  console.log("createdTrip", createdTrip)
+
 }

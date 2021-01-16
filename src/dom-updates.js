@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 import {
   getDestinations,
   getTrips
@@ -5,6 +6,9 @@ import {
 import {
   userID
 } from "./index.js"
+
+const modalContainer = document.querySelector('.modal-container')
+const closeModal = document.querySelector(".close")
 
 export const displayUserName = (traveler) => {
   const myNameDisplay = document.querySelector(".traveler-name")
@@ -53,12 +57,41 @@ export const showThisTrip = (event) => {
   Promise.all([tripsResults, destinationsResults]).then((data) => {
     let trips = data[0].trips
     let destinations = data[1].destinations
-    let clickedTrip = trips
-      .filter((trips) => trips.userID === userID)
-      .find((trip) => trip.id === Number(tripID))
-    let showThisDestination = destinations
-      .find(destination => destination.id === clickedTrip.destinationID)
-    console.log(showThisDestination)
-    // create an overlay pop up thing that displays showThisDestination.image
+    let tripData = getTripData(trips, destinations, tripID)
+    showTripData(tripData)
   })
 }
+
+function getTripData(trips, destinations, tripID) {
+  let clickedTrip = trips
+    .filter((trips) => trips.userID === userID)
+    .find((trip) => trip.id === Number(tripID))
+  let showThisDestination = destinations.find(
+    (destination) => destination.id === clickedTrip.destinationID
+  )
+  let tripData = []
+  tripData.push(showThisDestination)
+  tripData.push(clickedTrip)
+  console.log(tripData)
+  return tripData
+}
+
+function showTripData(tripData) {
+  modalContainer.classList.add('show')
+  // display the info
+  document.querySelector(".destination").innerText = `${tripData[0].destination}`
+  document.querySelector('.trip-photo').setAttribute('src', `${tripData[0].image}`)
+  document.querySelector(".departure").innerText = `${tripData[1].date}`
+  document.querySelector(".trip-length").innerText = `${tripData[1].duration}`
+  if (tripData[1].travelers === 1) {
+    document.querySelector(".traveler-count").innerText = ''
+    document.querySelector('.friend-count').textContent = 'Just me,'
+  } else {
+    document.querySelector(".traveler-count").innerText = `${tripData[1].travelers - 1}`
+    document.querySelector(".friend-count").textContent = " of my friends and me,"
+  }
+}
+
+closeModal.addEventListener("click", () => {
+  modalContainer.classList.remove("show")
+})

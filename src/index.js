@@ -27,10 +27,10 @@ import {
 
 
 // how to tell webpack to use an image (also need to link to it in the index.html)
-// import './images/background-desert.png'
-// import "./images/globe.svg"
-// import "./images/money.svg"
-// import "./images/suitcase.svg"
+import './images/background-desert.png'
+import "./images/globe.svg"
+import "./images/money.svg"
+import "./images/suitcase.svg"
 
 window.onload = onStartup()
 
@@ -85,7 +85,6 @@ function onStartup() {
     )
     let totalSpent = lodgingCost + flightCost
     createTraveler(traveler, aggregateTripData, specificDestinationData, totalSpent)
-    // console.log(currentTraveler)
     document.querySelector('.total-spent').innerText = `I've spent $${totalSpent.toFixed(2)} creating these priceless memories.`
   })
     .then(() => {

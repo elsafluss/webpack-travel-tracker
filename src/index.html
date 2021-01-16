@@ -3,12 +3,24 @@
 
 <head>
   <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Sedgwick+Ave&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+HK:wght@300;500;900&display=swap" rel="stylesheet">
   <title>Travel Tracker</title>
 </head>
 
 <body>
   <header class="header">
+    <div class="modal-container" id="modal-container">
+      <div class="modal">
+        <button class="close">back</button>
+        <img src="" alt="" class="trip-photo">
+        <h2><span class="traveler-count"></span><span class="friend-count"> of my friends and me,</span>
+        <span class="trip-length"></span> glorious days in <span class="destination">,</span>
+        <span class="departure"></span>!</h2>
+      </div>
+    </div>
+
     <h1 class="header-text">travel better</h1>
     <div class="nav-area">
       <ul>
@@ -23,7 +35,7 @@
     <section class="traveler-name">traveler's name</section>
     <section class="container">
       <article class="all-trips card">
-        <div class="card-header my-trips">view trips</div>
+        <div class="card-header my-trips">view my trips</div>
         <img src="./images/globe.svg" alt="globe">
         <div class="all-trips-text card-text">
           <p class="all-trip"></p>

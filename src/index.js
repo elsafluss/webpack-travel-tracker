@@ -1,8 +1,8 @@
 /* eslint-disable max-len */
 export const userID = 35
 import './css/base.scss';
+// import Trip from './trip.js'
 import Traveler from "./traveler.js"
-import Trip from './trip.js'
 import {
   sortMyTrips
 } from "./traveler.js"

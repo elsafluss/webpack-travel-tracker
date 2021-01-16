@@ -51,15 +51,14 @@ export const showThisTrip = (event) => {
     return destinations
   })
   Promise.all([tripsResults, destinationsResults]).then((data) => {
-    let trips = data[0]
+    let trips = data[0].trips
     let destinations = data[1].destinations
-    let thisUsersTrips = trips.trips.filter((trips) => trips.userID === userID)
-    let clickedTrip = thisUsersTrips.find((trip) => trip.id === Number(tripID))
-    if (clickedTrip) {
-      let showThisDestination = destinations
-        .find(destination => destination.id = clickedTrip.destinationID)
-      console.log(showThisDestination.destination)
-    } 
+    let clickedTrip = trips
+      .filter((trips) => trips.userID === userID)
+      .find((trip) => trip.id === Number(tripID))
+    let showThisDestination = destinations
+      .find(destination => destination.id === clickedTrip.destinationID)
+    console.log(showThisDestination)
+    // create an overlay pop up thing that displays showThisDestination.image
   })
 }
-// take clickedTrip.destinationID to destinations and display the destination.

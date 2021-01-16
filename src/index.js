@@ -2,6 +2,7 @@
 export const userID = 45
 import './css/base.scss';
 import Traveler from "./traveler.js"
+import Trip from './trip.js'
 import {
   sortMyTrips
 } from "./traveler.js"

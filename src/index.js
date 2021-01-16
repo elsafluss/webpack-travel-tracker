@@ -1,6 +1,22 @@
 /* eslint-disable max-len */
 const userID = 29
 import './css/base.scss';
+import Traveler from "./traveler.js"
+import {
+  sortMyTrips
+} from "./traveler.js"
+import {
+  getDestinationData,
+  getTripData,
+  getDestinationDataForTheseTrips,
+  calculateTripCost,
+  calculateFlightCost,
+} from "./data-manip.js"
+import {
+  displayTrips,
+  displayUserName,
+  fillDestinationList,
+} from "./dom-updates.js"
 import {
   getTravelers,
   getATraveler,
@@ -9,54 +25,51 @@ import {
 } from "./util.js"
 
 // how to tell webpack to use an image (also need to link to it in the index.html)
-import './images/background-desert.png'
-import "./images/globe.svg"
-import "./images/money.svg"
-import "./images/suitcase.svg"
-
-const myNameDisplay = document.querySelector('.traveler-name')
-const myTripsDisplay = document.querySelector('.all-trip')
+// import './images/background-desert.png'
+// import "./images/globe.svg"
+// import "./images/money.svg"
+// import "./images/suitcase.svg"
 
 window.onload = onStartup()
 
 function onStartup() {
   const travelersResults = getTravelers()
-    .then((travelers) => {
+    .then(travelers => {
       return travelers
     })
-    .catch((error) => console.log('error getting travelers', error))
+    .catch(error => console.log('error getting travelers', error))
   const travelerResults = getATraveler(userID)
-    .then((traveler) => {
-      myNameDisplay.innerText = traveler.name
+    .then(traveler => {
+      displayUserName(traveler)
       return traveler
     })
-    .catch((error) => console.log("error getting traveler", error))
+    .catch(error => console.log("error getting traveler", error))
   const tripsResults = getTrips()
-    .then((trips) => {
-      sortMyTrips(trips).forEach((trip) => {
+    .then(trips => {
+      sortMyTrips(trips, userID).forEach((trip) => {
         displayTrips(trip)
       })
       return trips
     })
-    .catch((error) => console.log("error getting trips", error))
+    .catch(error => console.log("error getting trips", error))
   const destinationsResults = getDestinations()
     .then((destinations) => {
       return destinations
     })
-    .catch((error) => console.log("error getting destinations", error))
+    .catch(error => console.log("error getting destinations", error))
   Promise.all([
     travelersResults,
     travelerResults,
     destinationsResults,
     tripsResults,
-  ]).then((data) => {
+  ]).then(data => {
     // let travelers = data[0]
-    // let traveler = data[1]
+    let traveler = data[1]
     let destinations = data[2].destinations
     let trips = data[3].trips
     let destinationData = getDestinationData(destinations)
     fillDestinationList(destinationData)
-    let aggregateTripData = getTripData(trips)
+    let aggregateTripData = getTripData(trips, userID)
     let specificDestinationData = getDestinationDataForTheseTrips(
       destinationData,
       aggregateTripData
@@ -68,125 +81,25 @@ function onStartup() {
       aggregateTripData
     )
     let totalSpent = lodgingCost + flightCost
+    let currentTraveler = createTraveler(traveler, aggregateTripData, specificDestinationData, totalSpent)
+    console.log(currentTraveler)
     document.querySelector('.total-spent').innerText = `I've only spent $${totalSpent.toFixed(2)} creating these priceless memories.`
   })
 }
 
-function sortMyTrips(trips) {
-  let tripsDates = trips.trips
-    .filter((trips) => trips.userID === userID)
-    .map((trip) => trip.date)
-    .sort()
-  return tripsDates
+function createTraveler(
+  traveler,
+  aggregateTripData,
+  specificDestinationData,
+  totalSpent
+) {
+  let currentTraveler = new Traveler(
+    userID,
+    traveler.name,
+    traveler.travelerType,
+    aggregateTripData,
+    specificDestinationData,
+    totalSpent
+  )
+  return currentTraveler
 }
-
-function displayTrips(trip) {
-  let button = document.createElement("button")
-  let p = document.createElement("p")
-  let textNode = document.createTextNode(`${trip} `)
-  button.appendChild(textNode)
-  myTripsDisplay.appendChild(button)
-  myTripsDisplay.appendChild(p)
-}
-
-function getDestinationData(destinations) {
-  let destinationData = destinations.map((destinations) => [
-    destinations.id,
-    destinations.estimatedLodgingCostPerDay,
-    destinations.estimatedFlightCostPerPerson,
-    destinations.destination,
-    destinations.image,
-  ])
-  let allDestinationData = []
-  destinationData.reduce((total, value) => {
-    allDestinationData.push({
-      destinationID: value[0],
-      lodgingPerDay: value[1],
-      flightCost: value[2],
-      destinationName: value[3],
-      destinationImage: value[4],
-    })
-    return allDestinationData
-  }, {})
-  return allDestinationData
-}
-
-function getTripData(trips) {
-  let tripData = trips
-    .filter((trips) => trips.userID === userID)
-    .map((trip) => [trip.id, trip.destinationID, trip.duration, trip.travelers])
-  let aggregateTripData = []
-  tripData.reduce((total, value) => {
-    aggregateTripData.push({
-      tripID: value[0],
-      destinationID: value[1],
-      tripDuration: value[2],
-      travelerCount: value[3],
-    })
-    return aggregateTripData
-  }, {})
-  return aggregateTripData
-}
-
-function getDestinationDataForTheseTrips(destinations, trips) {
-  let specificDestinationData = []
-  specificDestinationData = destinations.filter(destination => {
-    let destID = destination.destinationID
-    let matchingTrip = trips.find(trip => trip.destinationID === destID)
-    if (matchingTrip) {
-      specificDestinationData.push(destination)
-    }
-    return matchingTrip
-  })
-  return specificDestinationData
-}
-
-// listMyTripDestinations(specificDestinationData) {
-// for each destination, get the destinationName
-// create a button with that destinationName
-// clicking the button shows a picture of that place
-// }
-
-function calculateTripCost(specificDestinationData, aggregateTripData) {
-  let lodgingCost = 0
-  specificDestinationData.filter(destination => {
-    let matchingTrip = aggregateTripData.find(trip => trip.destinationID === destination.destinationID)
-    if (matchingTrip) {
-      let numberOfPeople = matchingTrip.travelerCount
-      lodgingCost += (destination.lodgingPerDay * matchingTrip.tripDuration) * numberOfPeople
-    }
-    return lodgingCost
-  })
-  return lodgingCost * 1.1
-}
-
-function calculateFlightCost(specificDestinationData, aggregateTripData) {
-  let flightCost = 0
-  specificDestinationData.filter((destination) => {
-    let matchingTrip = aggregateTripData.find(
-      (trip) => trip.destinationID === destination.destinationID
-    )
-    if (matchingTrip) {
-      flightCost += destination.flightCost * matchingTrip.travelerCount
-    }
-    return flightCost
-  })
-  return flightCost * 1.1
-}
-
-function fillDestinationList(destinationData) {
-  let sortedByName = destinationData.sort((a, b) => {
-    if (a.destinationName < b.destinationName) {
-      return -1
-    }
-  })
-  let listOfDestinationNames = sortedByName.map((destination) => destination.destinationName)
-  listOfDestinationNames.forEach(function (destination) {
-    let opt = document.createElement('option')
-    opt.innerHTML = destination
-    opt.value = destination
-    document.querySelector(".choose-destination").appendChild(opt)
-  })
-  return listOfDestinationNames
-}
-

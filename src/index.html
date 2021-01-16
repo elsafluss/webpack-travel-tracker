@@ -3,12 +3,24 @@
 
 <head>
   <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Sedgwick+Ave&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+HK:wght@300;500;900&display=swap" rel="stylesheet">
   <title>Travel Tracker</title>
 </head>
 
 <body>
   <header class="header">
+    <div class="modal-container" id="modal-container">
+      <button class="close">back</button>
+      <div class="modal">
+        <img src="" alt="" class="trip-photo">
+        <h2><span class="traveler-count"></span><span class="friend-count"> of my friends and me,</span>
+        <span class="trip-length"></span> glorious days in <span class="destination">,</span>
+        <span class="departure"></span>!</h2>
+      </div>
+    </div>
+
     <h1 class="header-text">travel better</h1>
     <div class="nav-area">
       <ul>
@@ -20,30 +32,44 @@
   </header>
 
   <main class="main">
-    <section class="traveler-name">traveler name</section>
+    <section class="traveler-name">traveler's name</section>
     <section class="container">
       <article class="all-trips card">
-        <div class="card-header">all of my trips</div>
-        <div class="card-image">image goes here</div>
-        <div class="card-text">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Fugit aspernatur eius totam
-          nostrum distinctio neque. Quasi quam autem qui eius. Ea eveniet perferendis ut harum numquam architecto facere
-          doloribus qui?</div>
-        <button class="see-more btn">see more</button>
+        <div class="card-header my-trips">view my trips</div>
+        <!-- <img src="./images/globe.svg" alt="globe"> -->
+        <div class="all-trips-text card-text">
+          <p class="all-trip"></p>
+        </div>
       </article>
       <article class="amount-spent card">
         <div class="card-header">how much I've spent</div>
-        <div class="card-image">image goes here</div>
-        <div class="card-text">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ipsum veniam molestias
-          recusandae reiciendis, non, sunt sequi, dolorem natus adipisci autem dolorum minus. Suscipit placeat deserunt
-          neque asperiores quas nulla rem!</div>
-        <button class="see-more btn">see more</button>
+        <!-- <img src="./images/money.svg" alt="money"> -->
+        <div class="card-text total-spent"></div>
       </article>
       <article class="create-trip card">
         <div class="card-header">create a trip</div>
-        <div class="card-image">image goes here</div>
-        <div class="card-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Consectetur iusto ullam
-          incidunt, animi, eum eaque voluptates placeat ea, autem expedita molestias. Provident natus rerum cupiditate,
-          exercitationem error labore repellendus rem.</div>
+        <!-- <img src="./images/suitcase.svg" alt="money"> -->
+        <div class="card-text">
+          <form action="submit" class="create-trip-form">
+            <label for="create-trip-date">When should I leave?</label>
+            <br>
+            <input type="date" id="create-trip-date" class="create-trip-date">
+            <br><br>
+            <label for="create-trip-duration">How long is my trip?</label>
+            <br>
+            <input type="range" id="create-trip-duration" class="create-trip-duration">
+            <br><br>
+            <label for="create-trip-numPeople">How many travelers?</label>
+            <br>
+            <input type="number" id="create-trip-numPeople" class="create-trip-numPeople">
+            <br><br>
+            <label for="choose-destination">Where should I go?</label>
+            <br>
+            <select name="destination-list" id="choose-destination" class="choose-destination">
+              <option value="place">Select a destination</option>
+            </select>
+          </form>
+        </div>
         <button class="see-more btn">see more</button>
       </article>
     </section>

@@ -1,0 +1,61 @@
+.modal-container {
+    // display: none;
+    position: absolute;
+    top: 200px;
+    margin: auto;
+    height: 90vh;
+    width: 90vw;
+    background-color: $medium;
+    opacity: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    pointer-events: none;
+    z-index: 1;
+    // border: 1px solid $dark;
+}
+
+.modal {
+    background-color: whitesmoke;
+    position: relative;
+    // margin: auto;
+    color: $dark;
+    font-family: $handwriting;
+    font-size: 200%;
+    width: 700px;
+    height: 700px;
+    // padding: 3em 1em;
+    line-height: 1.6;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    box-shadow: $box-shadow;
+    margin: 1em 1em 3em 1em;
+    transform: rotate(-5deg);
+    border-radius: 3px;
+}
+
+.modal img {
+    width: 80%;
+    max-height: 250px;
+    border: $dark;
+    box-shadow: -3px -3px 4px $medium;
+    
+}
+
+h2 {
+    padding: 0 2em;
+}
+
+.show {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.close {
+    @include basic-button;
+    position: relative;
+    transform: rotate(5deg);
+}

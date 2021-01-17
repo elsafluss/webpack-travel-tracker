@@ -1,5 +1,5 @@
 /* eslint-disable max-len */
-export const userID = 32
+export const userID = 35
 import './css/base.scss';
 // import Trip from './trip.js'
 import Traveler from "./traveler.js"
@@ -28,10 +28,10 @@ import {
 } from "./util.js"
 
 // how to tell webpack to use an image (also need to link to it in the index.html)
-import './images/background-desert.png'
-import "./images/globe.svg"
-import "./images/money.svg"
-import "./images/suitcase.svg"
+// import './images/background-desert.png'
+// import "./images/globe.svg"
+// import "./images/money.svg"
+// import "./images/suitcase.svg"
 
 window.onload = onStartup()
 

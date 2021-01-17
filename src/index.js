@@ -7,13 +7,24 @@ import {
   sortMyTrips
 } from "./traveler.js"
 import {
-  getDestinationData, getTripData, getDestinationDataForTheseTrips, calculateTripCost, calculateFlightCost, getFormData,
+  getDestinationData,
+  getTripData,
+  getDestinationDataForTheseTrips,
+  calculateTripCost,
+  calculateFlightCost,
+  getFormData,
 } from "./data-manip.js"
 import {
-  displayTrips, displayUserName, fillDestinationList, showThisTrip,
+  displayTrips,
+  displayUserName,
+  fillDestinationList,
+  showThisTrip,
 } from "./dom-updates.js"
 import {
-  getTravelers, getATraveler, getTrips, getDestinations,
+  getTravelers,
+  getATraveler,
+  getTrips,
+  getDestinations,
 } from "./util.js"
 
 // how to tell webpack to use an image (also need to link to it in the index.html)
@@ -68,7 +79,6 @@ function onStartup() {
       destinationData,
       aggregateTripData
     )
-    // listMyTripDestinations(specificDestinationData)
     let lodgingCost = calculateTripCost(specificDestinationData, aggregateTripData)
     let flightCost = calculateFlightCost(
       specificDestinationData,

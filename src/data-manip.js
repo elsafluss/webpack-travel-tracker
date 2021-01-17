@@ -28,7 +28,16 @@ export const getDestinationData = (destinations) => {
 export const getTripData = (trips, userID) => {
   let tripData = trips
     .filter((trips) => trips.userID === userID)
-    .map((trip) => [trip.id, trip.destinationID, trip.duration, trip.travelers])
+    .map((trip) => [
+      trip.id,
+      trip.destinationID,
+      trip.duration,
+      trip.travelers,
+      trip.date,
+      trip.status,
+      trip.suggestedActivities,
+      trip.userID
+    ])
   let aggregateTripData = []
   tripData.reduce((total, value) => {
     aggregateTripData.push({
@@ -36,6 +45,10 @@ export const getTripData = (trips, userID) => {
       destinationID: value[1],
       tripDuration: value[2],
       travelerCount: value[3],
+      date: value[4],
+      status: value[5],
+      suggestedActivities: value[6],
+      userID: value[7]
     })
     return aggregateTripData
   }, {})

@@ -23,7 +23,7 @@ export const displayTrips = (trip) => {
   let p = document.createElement("p")
   let textNode = document.createTextNode(`${trip.date}`)
   button.appendChild(textNode)
-  button.setAttribute('id', trip.id)
+  button.setAttribute('id', trip.tripID)
   button.setAttribute("class", 'show-trip')
   myTripsDisplay.appendChild(button)
   myTripsDisplay.appendChild(p)

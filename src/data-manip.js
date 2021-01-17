@@ -44,9 +44,9 @@ export const getTripData = (trips, userID) => {
 
 export const getDestinationDataForTheseTrips = (destinations, trips) => {
   let specificDestinationData = []
-  specificDestinationData = destinations.filter(destination => {
+  specificDestinationData = destinations.filter((destination) => {
     let destID = destination.destinationID
-    let matchingTrip = trips.find(trip => trip.destinationID === destID)
+    let matchingTrip = trips.find((trip) => trip.destinationID === destID)
     if (matchingTrip) {
       specificDestinationData.push(destination)
     }

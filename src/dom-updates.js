@@ -7,6 +7,7 @@ import {
   userID
 } from "./index.js"
 import Trip from "./trip.js"
+import { calculateFlightCost } from "./data-manip.js"
 
 const modalContainer = document.querySelector('.modal-container')
 const closeModal = document.querySelector(".close")
@@ -18,16 +19,17 @@ export const displayUserName = (traveler) => {
 }
 
 export const displayTrips = (trip) => {
-  console.log(trip)
   const myTripsDisplay = document.querySelector(".all-trip")
   let button = document.createElement("button")
   let p = document.createElement("p")
   let textNode = document.createTextNode(`${trip.date}`)
   button.appendChild(textNode)
-  button.setAttribute('id', trip.tripID)
+  button.setAttribute("id", trip.tripID)
   button.setAttribute("class", `show-trip ${trip.status} ${trip.future}`)
   myTripsDisplay.appendChild(button)
   myTripsDisplay.appendChild(p)
+  // calculateTripCost() pass in the right data
+  // calculateFlightCost() pass in the right data
 }
 
 export const fillDestinationList = (destinationData) => {
@@ -93,8 +95,9 @@ export const showTripData = (tripData) => {
     document.querySelector('.friend-count').textContent = 'Just me,'
   } else {
     document.querySelector(".traveler-count").innerText = `${tripData.travelers - 1}`
-    document.querySelector(".friend-count").textContent = " of my friends and me,"
+    document.querySelector(".friend-count").textContent = " of my friends and me,"    
   }
+  document.querySelector(".cost").textContent = `${tripData.totalCost}`
 }
 
 closeModal.addEventListener("click", () => {

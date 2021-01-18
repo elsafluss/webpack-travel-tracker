@@ -1,3 +1,4 @@
+import { displayTrips } from "./dom-updates.js"
 import {
   getDestinations,
   pushNewTrip
@@ -8,8 +9,8 @@ import {
 
 class Trip {
   constructor(newTrip) {
-    ;(this.newTripID = Date.now()),
-      (this.userID = newTrip.userID),
+      (this.newTripID = Date.now()), 
+      (this.userID = newTrip.userID), 
       (this.destination = newTrip.destination),
       (this.travelers = newTrip.travelers),
       (this.date = newTrip.date),
@@ -23,49 +24,42 @@ class Trip {
       (this.status = "pending"),
       (this.future = true),
       (this.suggestedActivities = newTrip.suggestedActivities || [])
-
   }
 
-  matchWithDestinationData() {
+  matchWithDestinationData(newTrip) {
     getDestinations()
       .then((destinations) => {
-        let destinationData = destinations.destinations.find(
-          (destination) => destination.destination === this.destination
-        )
-        console.log(destinationData)
-        // destinationData undefined
-        this.flightCost = destinationData.estimatedFlightCostPerPerson
-        // error cant read prop estimated... of undefined
-        this.lodgingCost = destinationData.estimatedLodgingCostPerDay
-        this.image = destinationData.image
-        this.alt = destinationData.alt
-        this.destinationID = destinationData.id
-        return destinationData
-      })
-      .then(() => {
-        let tripObject = this.createTripObject()
+        let destinationData = destinations.destinations.find((destination) => {
+          return destination.destination === newTrip.destination
+        })
+        newTrip.flightCost = destinationData.estimatedFlightCostPerPerson
+        newTrip.lodgingCost = destinationData.estimatedLodgingCostPerDay
+        newTrip.image = destinationData.image
+        newTrip.alt = destinationData.alt
+        newTrip.destinationID = destinationData.id
+        let tripObject = this.createTripObject(newTrip)
         pushNewTrip(tripObject)
-        // if POST was successful
-        // showTripData(tripObject) 
-        // use new function - showNewTrip
+        return tripObject
       })
       .catch((error) => console.log("error getting destinations", error))
-  }
-
-  createTripObject() {
-    let tripObject = {
-      id: this.newTripID,
-      userID: this.userID,
-      destinationID: this.destinationID,
-      travelers: Number(this.travelers),
-      date: this.date,
-      duration: Number(this.duration),
-      status: this.status,
-      suggestedActivities: this.suggestedActivities,
     }
+    
+    createTripObject(newTrip) {
+      let tripObject = {
+        id: this.newTripID,
+        userID: this.userID,
+        destinationID: newTrip.destinationID,
+        travelers: Number(this.travelers),
+        date: this.date,
+        duration: Number(this.duration),
+        status: this.status,
+        suggestedActivities: this.suggestedActivities,
+      }
+      displayTrips(newTrip)
     return tripObject
   }
 }
 
+export const createTripObject = Trip.prototype.createTripObject
 export const displayTrip = Trip.prototype.displayTrip
 export default Trip

@@ -2,22 +2,12 @@
 export const userID = 35
 
 import './css/base.scss';
-// import Trip from './trip.js'
-import Traveler from "./traveler.js"
 import {
-  sortTrip, catalogueTrip
-} from "./traveler.js"
-import {
-  combineTripAndDestination,
-  getDestinationData,
-  calculateLodgingCost,
-  calculateFlightCost,
   getFormData,
+  parseResults
 } from "./data-manip.js"
 import {
-  displayTrips,
   displayUserName,
-  fillDestinationList,
   showThisTrip,
 } from "./dom-updates.js"
 import {
@@ -25,7 +15,6 @@ import {
   getTrips,
   getDestinations,
 } from "./util.js"
-import Trip from './trip';
 
 window.onload = onStartup()
 
@@ -40,37 +29,8 @@ function onStartup() {
     .catch(error => console.log("error getting destinations", error))
   Promise.all([travelerResults, destinationsResults, tripsResults])
     .then(data => {
-      let traveler = data[0]
-      let destinations = data[1].destinations
-      let trips = data[2].trips
-      let usersTripsWithDestinationData = combineTripAndDestination(
-        trips,
-        destinations,
-        userID
-      )
-      let destinationData = getDestinationData(destinations, usersTripsWithDestinationData)
-      fillDestinationList(destinations)
-      let currentTraveler = new Traveler(
-        traveler,
-        usersTripsWithDestinationData,
-        destinationData
-      )
-      console.log(currentTraveler)
+      let currentTraveler = parseResults(data)
       displayUserName(currentTraveler)
-      usersTripsWithDestinationData.forEach((trip) => {
-        catalogueTrip(trip, currentTraveler)
-        sortTrip(trip, currentTraveler)
-        displayTrips(trip)
-        // let lodgingCost = calculateLodgingCost(
-        //   trip,
-        //   destinationData,
-        //   currentTraveler
-        //   )
-        let newTrip = new Trip(trip)
-        // let flightCost = calculateFlightCost(trip)
-        // let totalSpent = lodgingCost + flightCost
-      })
-      // write func that calculates this year's spending and call it here
     })
     .then(() => {
       let tripButtons = document.querySelectorAll(".show-trip")

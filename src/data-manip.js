@@ -1,7 +1,8 @@
 /* eslint-disable max-len */
 import { userID } from "."
 import Trip from "./trip"
-// import { displayTrip } from "./trip"
+import Traveler, { catalogueTrip, sortTrip } from "./traveler"
+import { fillDestinationList, displayTrips } from "./dom-updates"
 
 export const getDestinationData = (destinations, trips) => {
   let userDestinationData = []
@@ -27,32 +28,18 @@ export const combineTripAndDestination = (allTrips, allDestinations, userID) => 
   })
 }
 
-
-export const calculateLodgingCost = (trip, destinations, traveler) => {
-
-  let lodgingCost = 0
-  // destinations.forEach(destination => {
-  //   // if (destination.id === trip.destinationID) {
-
-  //   // }
-  // });
-  let numberOfPeople = trip.travelerCount
-  lodgingCost += trip.lodgingPerDay * trip.tripDuration * numberOfPeople
-  return lodgingCost * 1.1
+export const calculateLodgingCost = (trip) => {
+  return (trip.destinationData.estimatedLodgingCostPerDay *
+    trip.duration *
+    trip.travelers *
+    1.1)
 }
 
-export const calculateFlightCost = (specificDestinationData, aggregateTripData) => {
-  let flightCost = 0
-  specificDestinationData.filter((destination) => {
-    let matchingTrip = aggregateTripData.find(
-      (trip) => trip.destinationID === destination.destinationID
-    )
-    if (matchingTrip) {
-      flightCost += destination.flightCost * matchingTrip.travelerCount
-    }
-    return flightCost
-  })
-  return flightCost * 1.1
+export const calculateFlightCost = (trip) => {
+  return (trip.destinationData.estimatedFlightCostPerPerson *
+    trip.duration *
+    trip.travelers *
+    1.1)
 }
 
 export const getFormData = () => {
@@ -69,5 +56,40 @@ export const getFormData = () => {
   }
   let createdTrip = new Trip(newTrip)
   createdTrip.matchWithDestinationData(newTrip)
+  // can I use combinetripanddestination and getdestinationdata
+  // instead of matchwithdestinationdata
 }
 
+export const parseResults = (data) => {
+  let traveler = data[0]
+  let destinations = data[1].destinations
+  let trips = data[2].trips
+  let usersTripsWithDestinationData = combineTripAndDestination(
+    trips,
+    destinations,
+    userID
+  )
+  let destinationData = getDestinationData(
+    destinations,
+    usersTripsWithDestinationData
+  )
+  fillDestinationList(destinations)
+  let currentTraveler = new Traveler(
+    traveler,
+    usersTripsWithDestinationData,
+    destinationData
+  )
+  usersTripsWithDestinationData.forEach((trip) => {
+    catalogueTrip(trip, currentTraveler)
+    sortTrip(trip, currentTraveler)
+    displayTrips(trip)
+    let totalSpent = (
+      calculateLodgingCost(trip) + calculateFlightCost(trip)
+    ).toLocaleString("en-US", { style: "currency", currency: "USD" })
+    // getAnnualSpending() based on date year
+    // let newTrip = new Trip(trip)
+    // when to instantiate a trip?
+    // just when a new one is made? yeah
+  })
+  return currentTraveler
+}

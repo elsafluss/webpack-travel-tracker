@@ -28,8 +28,6 @@ export const displayTrips = (trip) => {
   button.setAttribute("class", `show-trip ${trip.status} ${trip.future}`)
   myTripsDisplay.appendChild(button)
   myTripsDisplay.appendChild(p)
-  // calculateLodgingCost() pass in the right data
-  // calculateFlightCost() pass in the right data
 }
 
 export const fillDestinationList = (destinations) => {

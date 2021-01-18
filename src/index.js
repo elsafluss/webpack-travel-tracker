@@ -1,4 +1,4 @@
-/* eslint-disable max-len */
+
 export const userID = 35
 
 import './css/base.scss';
@@ -18,7 +18,8 @@ import {
 
 window.onload = onStartup()
 
-document.querySelector(".submit-form").addEventListener("click", getFormData)
+document.querySelector(".submit-form")
+  .addEventListener("click", getFormData)
 
 function onStartup() {
   const travelerResults = getATraveler(userID)

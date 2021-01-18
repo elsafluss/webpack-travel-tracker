@@ -7,7 +7,6 @@ import {
   userID
 } from "./index.js"
 import Trip from "./trip.js"
-import { calculateFlightCost } from "./data-manip.js"
 
 const modalContainer = document.querySelector('.modal-container')
 const closeModal = document.querySelector(".close")

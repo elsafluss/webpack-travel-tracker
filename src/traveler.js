@@ -40,6 +40,5 @@ class Traveler {
 }
 
 export const sortTrip = Traveler.prototype.sortTrip
-// export const getMyTrips = Traveler.prototype.getMyTrips
 export const catalogueTrip = Traveler.prototype.catalogueTrip
 export default Traveler

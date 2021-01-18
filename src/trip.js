@@ -34,14 +34,13 @@ class Trip {
         newTrip.image = destinationData.image
         newTrip.alt = destinationData.alt
         newTrip.destinationID = destinationData.id
-        let tripObject = this.createTripObject(newTrip)
-        pushNewTrip(tripObject)
-        return tripObject
+        this.pushTripToAPI(newTrip)
+        return newTrip
       })
       .catch((error) => console.log("error getting destinations", error))
     }
     
-    createTripObject(newTrip) {
+    pushTripToAPI(newTrip) {
       let tripObject = {
         id: this.newTripID,
         userID: this.userID,
@@ -52,11 +51,14 @@ class Trip {
         status: this.status,
         suggestedActivities: this.suggestedActivities,
       }
+      pushNewTrip(tripObject).catch((error) =>
+        console.log("error posting trip", error)
+      )
       displayTrips(newTrip)
     return tripObject
   }
 }
 
-export const createTripObject = Trip.prototype.createTripObject
+export const pushTripToAPI = Trip.prototype.pushTripToAPI
 export const displayTrip = Trip.prototype.displayTrip
 export default Trip

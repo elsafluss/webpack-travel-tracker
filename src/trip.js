@@ -8,20 +8,22 @@ import {
 
 class Trip {
   constructor(newTrip) {
-    (this.newTripID = Date.now()),
-    (this.userID = newTrip.userID),
-    (this.destination = newTrip.destination),
-    (this.travelers = newTrip.travelers),
-    (this.date = newTrip.date),
-    (this.duration = newTrip.duration),
-    (this.destinationID = newTrip.destinationID || 0),
-    (this.flightCost = newTrip.flightCost || 0),
-    (this.lodgingCost = newTrip.lodgingCost || 0),
-    (this.totalCost = newTrip.totalCost || 0),
-    (this.image = newTrip.image || ''),
-    (this.alt = newTrip.alt || ""),
-    (this.status = "pending"),
-    (this.suggestedActivities = newTrip.suggestedActivities || [])
+    ;(this.newTripID = Date.now()),
+      (this.userID = newTrip.userID),
+      (this.destination = newTrip.destination),
+      (this.travelers = newTrip.travelers),
+      (this.date = newTrip.date),
+      (this.duration = newTrip.duration),
+      (this.destinationID = newTrip.destinationID || 0),
+      (this.flightCost = newTrip.flightCost || 0),
+      (this.lodgingCost = newTrip.lodgingCost || 0),
+      (this.totalCost = newTrip.totalCost || 0),
+      (this.image = newTrip.image || ""),
+      (this.alt = newTrip.alt || ""),
+      (this.status = "pending"),
+      (this.future = true),
+      (this.suggestedActivities = newTrip.suggestedActivities || [])
+
   }
 
   matchWithDestinationData() {

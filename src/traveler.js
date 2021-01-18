@@ -14,31 +14,39 @@ class Traveler {
     (this.destinations = destinations),
     (this.totalSpent = totalSpent),
     (this.futureTrips = []),
-    (this.pastTrips = [])
+    (this.pastTrips = []),
+    (this.approved = []),
+    (this.pending = [])
   }
 
   getMyTrips(traveler) {
     let myTrips = traveler.trips.filter((trips) => {
       return trips.userID === traveler.userID
     })
+    sortMyTrips(traveler)
+    catalogueTrips(traveler)
     return myTrips
   }
 
-  sortMyTrips(type, userID) {
-    let tripsData = this.trips.filter((trips) => {
-      return trips.userID === userID && trips.status === type
+  sortMyTrips(traveler) {
+    traveler.trips.filter((trip) => {
+      if (trip.userID === traveler.travelerID && trip.status === "approved") {
+        traveler.approved.push(trip)
+      } else {
+        traveler.pending.push(trip)
+      }
     })
-    return tripsData
   }
 
-  catalogueTrips(userID) {
-    let myTrips = this.getMyTrips(userID)
+  catalogueTrips(traveler) {
     let today = Date.now()
-    myTrips.filter(trip => {
+    traveler.trips.filter((trip) => {
       if (new Date(trip.date) > new Date(today)) {
-        this.futureTrips.push(trip)
+        trip.future = true
+        traveler.futureTrips.push(trip)
       } else {
-        this.pastTrips.push(trip)
+        trip.future = false
+        traveler.pastTrips.push(trip)
       }
     })
   }
@@ -53,4 +61,5 @@ class Traveler {
 
 export const sortMyTrips = Traveler.prototype.sortMyTrips
 export const getMyTrips = Traveler.prototype.getMyTrips
+export const catalogueTrips = Traveler.prototype.catalogueTrips
 export default Traveler

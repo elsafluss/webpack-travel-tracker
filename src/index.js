@@ -1,5 +1,6 @@
 /* eslint-disable max-len */
 export const userID = 36
+
 import './css/base.scss';
 // import Trip from './trip.js'
 import Traveler from "./traveler.js"

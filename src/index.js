@@ -5,13 +5,12 @@ import './css/base.scss';
 // import Trip from './trip.js'
 import Traveler from "./traveler.js"
 import {
-  getMyTrips
+  sortTrip, catalogueTrip
 } from "./traveler.js"
 import {
+  combineTripAndDestination,
   getDestinationData,
-  getTripData,
-  getDestinationDataForTheseTrips,
-  calculateTripCost,
+  calculateLodgingCost,
   calculateFlightCost,
   getFormData,
 } from "./data-manip.js"
@@ -26,12 +25,7 @@ import {
   getTrips,
   getDestinations,
 } from "./util.js"
-
-// how to tell webpack to use an image (also need to link to it in the index.html)
-// import './images/background-desert.png'
-// import "./images/globe.svg"
-// import "./images/money.svg"
-// import "./images/suitcase.svg"
+import Trip from './trip';
 
 window.onload = onStartup()
 
@@ -39,75 +33,49 @@ document.querySelector(".submit-form").addEventListener("click", getFormData)
 
 function onStartup() {
   const travelerResults = getATraveler(userID)
-    .then(traveler => {
-      displayUserName(traveler)
-      return traveler
-    })
     .catch(error => console.log("error getting traveler", error))
   const tripsResults = getTrips()
     .catch(error => console.log("error getting trips", error))
   const destinationsResults = getDestinations()
-    .then((destinations) => {
-      return destinations
-    })
     .catch(error => console.log("error getting destinations", error))
-  Promise.all([
-    travelerResults,
-    destinationsResults,
-    tripsResults,
-  ]).then(data => {
-    let traveler = data[0]
-    let destinations = data[1].destinations
-    let trips = data[2].trips
-    let destinationData = getDestinationData(destinations)
-    fillDestinationList(destinationData)
-    let aggregateTripData = getTripData(trips, userID)
-    let specificDestinationData = getDestinationDataForTheseTrips(
-      destinationData,
-      aggregateTripData
-    )
-    let lodgingCost = calculateTripCost(
-      specificDestinationData,
-      aggregateTripData
-    )
-    let flightCost = calculateFlightCost(
-      specificDestinationData,
-      aggregateTripData
-    )
-    let totalSpent = lodgingCost + flightCost
-    let currentTraveler = createTraveler(
-      traveler,
-      aggregateTripData,
-      specificDestinationData,
-      totalSpent
-    )
-    getMyTrips(currentTraveler)
-    currentTraveler.trips.forEach((trip) => {
-      displayTrips(trip)
+  Promise.all([travelerResults, destinationsResults, tripsResults])
+    .then(data => {
+      let traveler = data[0]
+      let destinations = data[1].destinations
+      let trips = data[2].trips
+      let usersTripsWithDestinationData = combineTripAndDestination(
+        trips,
+        destinations,
+        userID
+      )
+      let destinationData = getDestinationData(destinations, usersTripsWithDestinationData)
+      fillDestinationList(destinations)
+      let currentTraveler = new Traveler(
+        traveler,
+        usersTripsWithDestinationData,
+        destinationData
+      )
+      console.log(currentTraveler)
+      displayUserName(currentTraveler)
+      usersTripsWithDestinationData.forEach((trip) => {
+        catalogueTrip(trip, currentTraveler)
+        sortTrip(trip, currentTraveler)
+        displayTrips(trip)
+        // let lodgingCost = calculateLodgingCost(
+        //   trip,
+        //   destinationData,
+        //   currentTraveler
+        //   )
+        let newTrip = new Trip(trip)
+        // let flightCost = calculateFlightCost(trip)
+        // let totalSpent = lodgingCost + flightCost
+      })
+      // write func that calculates this year's spending and call it here
     })
-    document.querySelector(".total-spent").innerText = `I've spent $${totalSpent.toFixed(2)} creating these priceless memories.`
-  })
     .then(() => {
       let tripButtons = document.querySelectorAll(".show-trip")
       tripButtons.forEach(button => {
         button.addEventListener('click', showThisTrip)
       })
     })
-}
-
-function createTraveler(
-  traveler,
-  aggregateTripData,
-  specificDestinationData,
-  totalSpent
-) {
-  let currentTraveler = new Traveler(
-    userID,
-    traveler.name,
-    traveler.travelerType,
-    aggregateTripData,
-    specificDestinationData,
-    totalSpent
-  )
-  return currentTraveler
 }

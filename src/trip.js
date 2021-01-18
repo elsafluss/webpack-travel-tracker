@@ -3,9 +3,6 @@ import {
   getDestinations,
   pushNewTrip
 } from "./util.js"
-// import {
-//   showTripData
-// } from "./dom-updates.js"
 
 class Trip {
   constructor(newTrip) {

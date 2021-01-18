@@ -14,8 +14,8 @@ const closeModal = document.querySelector(".close")
 
 export const displayUserName = (traveler) => {
   const myNameDisplay = document.querySelector(".traveler-name")
-  myNameDisplay.innerText = traveler.name
-  return traveler.id
+  myNameDisplay.innerText = traveler.travelerName
+  return traveler.travelerID
 }
 
 export const displayTrips = (trip) => {
@@ -28,26 +28,18 @@ export const displayTrips = (trip) => {
   button.setAttribute("class", `show-trip ${trip.status} ${trip.future}`)
   myTripsDisplay.appendChild(button)
   myTripsDisplay.appendChild(p)
-  // calculateTripCost() pass in the right data
+  // calculateLodgingCost() pass in the right data
   // calculateFlightCost() pass in the right data
 }
 
-export const fillDestinationList = (destinationData) => {
-  let sortedByName = destinationData.sort((a, b) => {
-    if (a.destinationName < b.destinationName) {
-      return -1
-    }
-  })
-  let listOfDestinationNames = sortedByName.map(
-    (destination) => destination.destinationName
-  )
-  listOfDestinationNames.forEach(function (destination) {
+export const fillDestinationList = (destinations) => {
+  destinations.forEach((destination) => {
     let opt = document.createElement("option")
-    opt.innerHTML = destination
-    opt.value = destination
+    opt.innerHTML = destination.destination
+    opt.value = destination.destination
     document.querySelector(".choose-destination").appendChild(opt)
   })
-  return listOfDestinationNames
+  return destinations
 }
 
 export const showThisTrip = (event) => {
@@ -61,12 +53,12 @@ export const showThisTrip = (event) => {
   Promise.all([tripsResults, destinationsResults]).then((data) => {
     let trips = data[0].trips
     let destinations = data[1].destinations
-    let tripData = getTripData(trips, destinations, tripID)
+    let tripData = combineTripAndDestination(trips, destinations, tripID)
     showTripData(tripData)
   })
 }
 
-function getTripData(trips, destinations, tripID) {
+function combineTripAndDestination(trips, destinations, tripID) {
   let clickedTrip = trips
     .filter((trips) => trips.userID === userID)
     .find((trip) => trip.id === Number(tripID))

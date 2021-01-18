@@ -22,13 +22,21 @@
         width: auto;
     }
 
-    .past {
+    .false {
         background-color: $dark;
         color: $light
     }
 
-    .future {
+    .true {
         background-color: $light;
+    }
+
+    .approved {
+        border: yellow 2px solid;
+    }
+
+    .pending {
+        border: green 2px solid;
     }
 }
 

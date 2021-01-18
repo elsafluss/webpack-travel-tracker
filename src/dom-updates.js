@@ -18,6 +18,7 @@ export const displayUserName = (traveler) => {
 }
 
 export const displayTrips = (trip) => {
+  // console.log(trip)
   const myTripsDisplay = document.querySelector(".all-trip")
   let button = document.createElement("button")
   let p = document.createElement("p")

@@ -39,7 +39,7 @@ export const getTripData = (trips, userID) => {
       trip.userID
     ])
   let aggregateTripData = []
-  tripData.reduce((total, value) => {
+  tripData.reduce((_total, value) => {
     aggregateTripData.push({
       tripID: value[0],
       destinationID: value[1],

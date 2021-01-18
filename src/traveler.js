@@ -13,13 +13,13 @@ class Traveler {
     (this.trips = trips),
     (this.destinations = destinations),
     (this.totalSpent = totalSpent),
-    this.futureTrips = [],
-    this.pastTrips = []
+    (this.futureTrips = []),
+    (this.pastTrips = [])
   }
 
-  getMyTrips(userID) {
-    let myTrips = this.trips.filter((trips) => {
-      return trips.userID === userID
+  getMyTrips(traveler) {
+    let myTrips = traveler.trips.filter((trips) => {
+      return trips.userID === traveler.userID
     })
     return myTrips
   }
@@ -52,4 +52,5 @@ class Traveler {
 }
 
 export const sortMyTrips = Traveler.prototype.sortMyTrips
+export const getMyTrips = Traveler.prototype.getMyTrips
 export default Traveler

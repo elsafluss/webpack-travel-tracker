@@ -20,7 +20,15 @@
         margin: 1em auto 2em auto;
         height: 75px;
         width: auto;
+    }
 
+    .past {
+        background-color: $dark;
+        color: $light
+    }
+
+    .future {
+        background-color: $light;
     }
 }
 

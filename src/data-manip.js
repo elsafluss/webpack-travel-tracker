@@ -69,6 +69,8 @@ export const getDestinationDataForTheseTrips = (destinations, trips) => {
 }
 
 export const calculateTripCost = (specificDestinationData, aggregateTripData) => {
+  // console.log("specificDestinationData", specificDestinationData)
+  // console.log("aggregateTripData", aggregateTripData)
   let lodgingCost = 0
   specificDestinationData.filter((destination) => {
     let matchingTrip = aggregateTripData.find(

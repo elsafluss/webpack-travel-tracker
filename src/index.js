@@ -82,9 +82,7 @@ function onStartup() {
       totalSpent
     )
     getMyTrips(currentTraveler)
-    currentTraveler.trips.forEach((trip) => {
-      displayTrips(trip)
-    })
+    displayTrips(currentTraveler)
     document.querySelector(".total-spent").innerText = `I've spent $${totalSpent.toFixed(2)} creating these priceless memories.`
   })
     .then(() => {

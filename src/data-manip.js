@@ -99,15 +99,18 @@ export const calculateFlightCost = (specificDestinationData, aggregateTripData) 
 }
 
 export const getFormData = () => {
-  let selectedDate = document.querySelector(".create-trip-date").value.split("-").join("/")
+  let date = document
+    .querySelector(".create-trip-date")
+    .value.split("-")
+    .join("/")
   let newTrip = {
     userID,
-    selectedDate,
-    selectedLength: document.querySelector(".create-trip-duration").value,
-    selectedGroupSize: document.querySelector(".create-trip-numPeople").value,
-    selectedDestination: document.querySelector(".choose-destination").value,
+    date,
+    duration: document.querySelector(".create-trip-duration").value,
+    travelers: document.querySelector(".create-trip-numPeople").value,
+    destination: document.querySelector(".choose-destination").value,
   }
   let createdTrip = new Trip(newTrip)
-  createdTrip.matchWithDestinationData()
+  createdTrip.matchWithDestinationData(newTrip)
 }
 

@@ -1,8 +1,16 @@
 /* eslint-disable max-len */
-import { userID } from "."
+import {
+  userID
+} from "."
 import Trip from "./trip"
-import Traveler, { catalogueTrip, sortTrip } from "./traveler"
-import { fillDestinationList, displayTrips } from "./dom-updates"
+import Traveler, {
+  catalogueTrip,
+  sortTrip
+} from "./traveler"
+import {
+  fillDestinationList,
+  displayTrips
+} from "./dom-updates"
 
 export const getDestinationData = (destinations, trips) => {
   let userDestinationData = []
@@ -21,12 +29,12 @@ export const getFormData = () => {
   let newTrip = {
     userID,
     date,
-    duration: document.querySelector(".create-trip-duration").value,
-    travelers: document.querySelector(".create-trip-numPeople").value,
+    duration: Number(document.querySelector(".create-trip-duration").value),
+    travelers: Number(document.querySelector(".create-trip-numPeople").value),
     destination: document.querySelector(".choose-destination").value,
   }
   let createdTrip = new Trip(newTrip)
-  createdTrip.matchWithDestinationData(newTrip)
+  createdTrip.matchWithDestinationData(createdTrip)
 }
 
 export const combineTripAndDestination = (allTrips, allDestinations, userID) => {
@@ -42,17 +50,30 @@ export const combineTripAndDestination = (allTrips, allDestinations, userID) => 
 }
 
 export const calculateLodgingCost = (trip) => {
-  return (trip.destinationData.estimatedLodgingCostPerDay *
-    trip.duration *
-    trip.travelers *
-    1.1)
+  if (trip.newTripID > 50) {
+    return (
+      trip.lodgingCost *
+      trip.duration *
+      trip.travelers *
+      1.1
+    )
+  } else {
+    return (trip.destinationData.estimatedLodgingCostPerDay *
+      trip.duration *
+      trip.travelers *
+      1.1)
+  }
 }
 
 export const calculateFlightCost = (trip) => {
-  return (trip.destinationData.estimatedFlightCostPerPerson *
-    trip.duration *
-    trip.travelers *
-    1.1)
+  if (trip.newTripID > 50) {
+    return trip.flightCost * trip.duration * trip.travelers * 1.1
+  } else {
+    return (trip.destinationData.estimatedFlightCostPerPerson *
+      trip.duration *
+      trip.travelers *
+      1.1)
+  }
 }
 
 // this helper func is technically only like 16 lines
@@ -73,11 +94,15 @@ export const parseResults = (data) => {
     destinationData
   )
   usersTripsWithDestinationData.forEach((trip) => {
+    trip.totalCost = (
+      calculateLodgingCost(trip) + calculateFlightCost(trip)
+    ).toLocaleString("en-US", {
+      style: "currency",
+      currency: "USD"
+    })
     catalogueTrip(trip, currentTraveler)
     sortTrip(trip, currentTraveler)
     displayTrips(trip)
-    let totalSpent = (calculateLodgingCost(trip) + calculateFlightCost(trip))
-      .toLocaleString("en-US", { style: "currency", currency: "USD" })
     // getAnnualSpending() based on date year
   })
   return currentTraveler

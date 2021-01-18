@@ -1,5 +1,4 @@
-
-export const userID = 35
+export const userID = 32
 
 import './css/base.scss';
 import {
@@ -32,11 +31,10 @@ function onStartup() {
     .then(data => {
       let currentTraveler = parseResults(data)
       displayUserName(currentTraveler)
-    })
-    .then(() => {
       let tripButtons = document.querySelectorAll(".show-trip")
       tripButtons.forEach(button => {
         button.addEventListener('click', showThisTrip)
       })
     })
+
 }

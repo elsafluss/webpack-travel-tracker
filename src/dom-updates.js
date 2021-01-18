@@ -11,6 +11,10 @@ import Trip from "./trip.js"
 const modalContainer = document.querySelector('.modal-container')
 const closeModal = document.querySelector(".close")
 
+closeModal.addEventListener("click", () => {
+  modalContainer.classList.remove("show")
+})
+
 export const displayUserName = (traveler) => {
   const myNameDisplay = document.querySelector(".traveler-name")
   myNameDisplay.innerText = traveler.travelerName
@@ -23,8 +27,9 @@ export const displayTrips = (trip) => {
   let p = document.createElement("p")
   let textNode = document.createTextNode(`${trip.date}`)
   button.appendChild(textNode)
-  button.setAttribute("id", trip.tripID)
+  button.setAttribute("id", trip.id)
   button.setAttribute("class", `show-trip ${trip.status} ${trip.future}`)
+  button.setAttribute("title", `${trip.totalCost}`)
   myTripsDisplay.appendChild(button)
   myTripsDisplay.appendChild(p)
 }
@@ -51,7 +56,7 @@ export const showThisTrip = (event) => {
     let trips = data[0].trips
     let destinations = data[1].destinations
     let tripData = combineTripAndDestination(trips, destinations, tripID)
-    showTripData(tripData)
+    // showTripData(tripData)
   })
 }
 
@@ -74,6 +79,7 @@ function combineTripAndDestination(trips, destinations, tripID) {
 }
 
 export const showTripData = (tripData) => {
+  console.log(tripData)
   modalContainer.classList.add('show')
   document.querySelector(".destination").innerText = `${tripData.destination}`
   document.querySelector('.trip-photo').setAttribute('src', `${tripData.image}`)
@@ -86,9 +92,5 @@ export const showTripData = (tripData) => {
     document.querySelector(".traveler-count").innerText = `${tripData.travelers - 1}`
     document.querySelector(".friend-count").textContent = " of my friends and me,"    
   }
-  document.querySelector(".cost").textContent = `${tripData.totalCost}`
 }
 
-closeModal.addEventListener("click", () => {
-  modalContainer.classList.remove("show")
-})

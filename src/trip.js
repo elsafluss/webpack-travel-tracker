@@ -1,4 +1,5 @@
 import { displayTrips } from "./dom-updates.js"
+import { calculateLodgingCost, calculateFlightCost } from "./data-manip.js"
 import {
   getDestinations,
   pushNewTrip
@@ -54,9 +55,15 @@ class Trip {
       pushNewTrip(tripObject).catch((error) =>
         console.log("error posting trip", error)
       )
+      let totalCost =
+        calculateLodgingCost(newTrip) + calculateFlightCost(newTrip)
+      newTrip.totalCost = totalCost.toLocaleString("en-US", {
+        style: "currency",
+        currency: "USD",
+      })
       displayTrips(newTrip)
-    return tripObject
-  }
+      return tripObject
+    }
 }
 
 export const pushTripToAPI = Trip.prototype.pushTripToAPI

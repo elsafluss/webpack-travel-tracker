@@ -31,7 +31,7 @@ export const pushNewTrip = (tripObject) => {
     body: JSON.stringify(tripObject),
   })
     .then((response) => response.json())
-    // .then((response) => console.log(response))
+    .then((response) => console.log(response))
     .then((data) => data)
     .catch((error) => console.log("error posting trip", error))
 }

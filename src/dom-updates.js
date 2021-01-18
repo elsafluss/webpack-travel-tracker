@@ -7,7 +7,6 @@ import {
   userID
 } from "./index.js"
 import Trip from "./trip.js"
-import { calculateFlightCost, calculateTripCost } from "./data-manip.js"
 
 const modalContainer = document.querySelector('.modal-container')
 const closeModal = document.querySelector(".close")
@@ -18,21 +17,19 @@ export const displayUserName = (traveler) => {
   return traveler.id
 }
 
-export const displayTrips = (currentTraveler) => {
-  console.log(currentTraveler)
-  currentTraveler.trips.forEach((trip) => {
-    calculateTripCost(currentTraveler.destinations, currentTraveler.trips)
-    calculateFlightCost(currentTraveler.destinations, currentTraveler.trips)
-    const myTripsDisplay = document.querySelector(".all-trip")
-    let button = document.createElement("button")
-    let p = document.createElement("p")
-    let textNode = document.createTextNode(`${trip.date}`)
-    button.appendChild(textNode)
-    button.setAttribute("id", trip.tripID)
-    button.setAttribute("class", `show-trip ${trip.status} ${trip.future}`)
-    myTripsDisplay.appendChild(button)
-    myTripsDisplay.appendChild(p)
-  })
+export const displayTrips = (trip) => {
+  const myTripsDisplay = document.querySelector(".all-trip")
+  let button = document.createElement("button")
+  let p = document.createElement("p")
+  let textNode = document.createTextNode(`${trip.date}`)
+  button.appendChild(textNode)
+  button.setAttribute("id", trip.tripID)
+  button.setAttribute("class", `show-trip ${trip.status} ${trip.future}`)
+  myTripsDisplay.appendChild(button)
+  myTripsDisplay.appendChild(p)
+  document.querySelector(
+    ".total-spent"
+  ).innerText = `I've spent ${trip.totalCost} creating these priceless memories.`
 }
 
 export const fillDestinationList = (destinationData) => {

@@ -1,7 +1,6 @@
 /* eslint-disable max-len */
 import { userID } from "."
 import Trip from "./trip"
-// import { displayTrip } from "./trip"
 
 export const getDestinationData = (destinations) => {
   let destinationData = destinations.map((destinations) => [
@@ -68,36 +67,14 @@ export const getDestinationDataForTheseTrips = (destinations, trips) => {
   return specificDestinationData
 }
 
-export const calculateTripCost = (specificDestinationData, aggregateTripData) => {
-  // console.log("specificDestinationData", specificDestinationData)
-  // console.log("aggregateTripData", aggregateTripData)
-  let lodgingCost = 0
-  specificDestinationData.filter((destination) => {
-    let matchingTrip = aggregateTripData.find(
-      (trip) => trip.destinationID === destination.destinationID
-    )
-    if (matchingTrip) {
-      let numberOfPeople = matchingTrip.travelerCount
-      lodgingCost +=
-        destination.lodgingPerDay * matchingTrip.tripDuration * numberOfPeople
-    }
-    return lodgingCost
-  })
-  return lodgingCost * 1.1
+export const calculateTripCost = (trip) => {
+  let lodgingCost = trip.lodgingCost * trip.duration * trip.travelers * 1.1
+  return lodgingCost
 }
 
-export const calculateFlightCost = (specificDestinationData, aggregateTripData) => {
-  let flightCost = 0
-  specificDestinationData.filter((destination) => {
-    let matchingTrip = aggregateTripData.find(
-      (trip) => trip.destinationID === destination.destinationID
-    )
-    if (matchingTrip) {
-      flightCost += destination.flightCost * matchingTrip.travelerCount
-    }
-    return flightCost
-  })
-  return flightCost * 1.1
+export const calculateFlightCost = (trip) => {
+  let flightCost = trip.flightCost * trip.travelers * 1.1
+  return flightCost
 }
 
 export const getFormData = () => {

@@ -2,7 +2,6 @@
 export const userID = 35
 
 import './css/base.scss';
-// import Trip from './trip.js'
 import Traveler from "./traveler.js"
 import {
   getMyTrips
@@ -83,7 +82,7 @@ function onStartup() {
     )
     getMyTrips(currentTraveler)
     displayTrips(currentTraveler)
-    document.querySelector(".total-spent").innerText = `I've spent $${totalSpent.toFixed(2)} creating these priceless memories.`
+
   })
     .then(() => {
       let tripButtons = document.querySelectorAll(".show-trip")

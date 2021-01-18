@@ -3,9 +3,7 @@ import {
   getDestinations,
   pushNewTrip
 } from "./util.js"
-// import {
-//   showTripData
-// } from "./dom-updates.js"
+import { calculateTripCost, calculateFlightCost } from "./data-manip.js"
 
 class Trip {
   constructor(newTrip) {
@@ -55,9 +53,15 @@ class Trip {
         status: this.status,
         suggestedActivities: this.suggestedActivities,
       }
+      let lodgingCost = calculateTripCost(newTrip)
+      let flightCost = calculateFlightCost(newTrip)
+      newTrip.totalCost = (lodgingCost + flightCost).toLocaleString("en-US", {
+        style: "currency",
+        currency: "USD",
+      })
       displayTrips(newTrip)
-    return tripObject
-  }
+      return tripObject
+    }
 }
 
 export const createTripObject = Trip.prototype.createTripObject

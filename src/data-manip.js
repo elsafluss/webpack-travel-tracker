@@ -12,12 +12,12 @@ import {
   displayTrips
 } from "./dom-updates"
 
-// this helper func is technically only like 16 lines
-export const parseResults = (data, userID) => {
+export const parseResults = (data, userID, event) => {
   let usersTripsWithDestinationData = combineTripAndDestination(
     data[2].trips,
     data[1].destinations,
-    userID
+    userID,
+    event
   )
   let destinationData = getDestinationData(
     data[1].destinations,
@@ -35,13 +35,15 @@ export const parseResults = (data, userID) => {
       calculateLodgingCost(trip) + calculateFlightCost(trip)
     ).toLocaleString("en-US", {
       style: "currency",
-      currency: "USD"
+      currency: "USD",
     })
     catalogueTrip(trip, currentTraveler)
     sortTrip(trip, currentTraveler)
     displayTrips(trip, currentTraveler)
     // getAnnualSpending() based on date year
   })
+  // console.log("currentTraveler", currentTraveler)
+  // currentTraveler.travelerID
   return currentTraveler
 }
 
@@ -58,6 +60,7 @@ export const getDestinationData = (destinations, trips) => {
 }
 
 export const getFormData = () => {
+  let userID = Number(document.querySelector(".traveler-name").id)
   let date = document.querySelector(".create-trip-date").value.split("-").join("/")
   let newTrip = {
     userID,

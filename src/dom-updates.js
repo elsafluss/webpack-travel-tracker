@@ -18,6 +18,7 @@ closeModal.addEventListener("click", () => {
 export const displayUserName = (traveler) => {
   const myNameDisplay = document.querySelector(".traveler-name")
   myNameDisplay.innerText = traveler.travelerName
+  myNameDisplay.setAttribute("id", `${traveler.travelerID}`)
   return traveler.travelerID
 }
 
@@ -45,7 +46,8 @@ export const fillDestinationList = (destinations) => {
 }
 
 export const showThisTrip = (event) => {
-  let tripID = event.target.id
+  let tripID = Number(event.target.id)
+  let userID = Number(document.querySelector('.traveler-name').id)
   let tripsResults = getTrips().then((trips) => {
     return trips
   })
@@ -55,16 +57,14 @@ export const showThisTrip = (event) => {
   Promise.all([tripsResults, destinationsResults]).then((data) => {
     let trips = data[0].trips
     let destinations = data[1].destinations
-    let tripData = combineTripAndDestination(trips, destinations, tripID)
-    console.log('tripData'. tripData)
+    let tripData = combineTripAndDestination(trips, destinations, userID, tripID)
     showTripData(tripData)
   })
 }
 
-function combineTripAndDestination(trips, destinations, tripID) {
-  let clickedTrip = trips
-    .filter((trips) => trips.userID === userID)
-    .find((trip) => trip.id === Number(tripID))
+function combineTripAndDestination(trips, destinations, userID, tripID) {
+  const usersTrips = trips.filter((trip) => trip.userID === Number(userID))
+  const clickedTrip = usersTrips.find((trip) => trip.id === tripID)
   let showThisDestination = destinations.find(
     (destination) => destination.id === clickedTrip.destinationID
   )

@@ -61,7 +61,8 @@ export const showThisTrip = (event) => {
   Promise.all([tripsResults, destinationsResults]).then((data) => {
     let trips = data[0].trips
     let destinations = data[1].destinations
-    let tripData = getTripData(trips, destinations, tripID)
+    let tripData = combineTripAndDestination(trips, destinations, tripID)
+    console.log('tripData'. tripData)
     showTripData(tripData)
   })
 }

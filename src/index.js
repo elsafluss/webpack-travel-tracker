@@ -93,5 +93,22 @@ function onStartup() {
         button.addEventListener('click', showThisTrip)
       })
     })
-// start with login page visible, main hidden
+  // start with login page visible, main hidden
+
+  function createTraveler(
+    traveler,
+    aggregateTripData,
+    specificDestinationData,
+    totalSpent
+  ) {
+    let currentTraveler = new Traveler(
+      userID,
+      traveler.name,
+      traveler.travelerType,
+      aggregateTripData,
+      specificDestinationData,
+      totalSpent
+    )
+    return currentTraveler
+  }
 }

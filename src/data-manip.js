@@ -36,7 +36,7 @@ export const parseResults = (data, userID, event) => {
     })
     catalogueTrip(trip, currentTraveler)
     sortTrip(trip, currentTraveler)
-    displayTrips(trip, currentTraveler)
+    displayTrips(trip)
     // getAnnualSpending() based on date year
   })
   return currentTraveler
@@ -82,7 +82,7 @@ export const combineTripAndDestination = (allTrips, allDestinations, userID) => 
 }
 
 export const calculateLodgingCost = (trip) => {
-  if (trip.newTripID > 50) {
+  if (trip.id > 50) {
     return (
       trip.lodgingCost *
       trip.duration *
@@ -98,7 +98,7 @@ export const calculateLodgingCost = (trip) => {
 }
 
 export const calculateFlightCost = (trip) => {
-  if (trip.newTripID > 50) {
+  if (trip.id > 50) {
     return trip.flightCost * trip.duration * trip.travelers * 1.1
   } else {
     return (trip.destinationData.estimatedFlightCostPerPerson *

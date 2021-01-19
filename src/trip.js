@@ -14,7 +14,7 @@ import {
 
 class Trip {
   constructor(newTrip) {
-    (this.newTripID = Date.now()),
+    (this.id = Date.now()),
     (this.userID = newTrip.userID),
     (this.destination = newTrip.destination),
     (this.travelers = newTrip.travelers),
@@ -57,7 +57,7 @@ class Trip {
 
   createTripObject(newTrip) {
     let tripObject = {
-      id: this.newTripID,
+      id: this.id,
       userID: this.userID,
       destinationID: newTrip.destinationID,
       travelers: Number(this.travelers),
@@ -71,7 +71,6 @@ class Trip {
 
   pushTripToAPI() {
     let savedTrip = getFromLocalStorage()
-    console.log(savedTrip)
     pushNewTrip(savedTrip.post).catch((error) =>
       console.log("error posting trip", error)
     )

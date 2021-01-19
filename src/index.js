@@ -20,7 +20,7 @@ document.querySelector(".submit-form").addEventListener("click", getFormData)
 const checkCredentials = () => {
   const username = document.querySelector(".username").value
   const password = document.querySelector(".password").value
-  const userID = username.slice(-2)
+  const userID = Number(username.slice(-2))
   if (username.includes("username") && password === "travel2020") {
     // and check length of username
     document.querySelector(".main").classList.remove("hidden")
@@ -44,7 +44,7 @@ export const onStartup = (userID) => {
     .catch(error => console.log("error getting destinations", error))
   Promise.all([travelerResults, destinationsResults, tripsResults])
     .then(data => {
-      let currentTraveler = parseResults(data)
+      let currentTraveler = parseResults(data, userID)
       displayUserName(currentTraveler)
       let tripButtons = document.querySelectorAll(".show-trip")
       tripButtons.forEach(button => {

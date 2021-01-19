@@ -22,7 +22,7 @@ const checkCredentials = (event) => {
   const username = document.querySelector(".username").value
   const password = document.querySelector(".password").value
   const userID = Number(username.slice(-2))
-  if (username.includes("username") && password === "travel2020") {
+  if (username.includes("traveler") && password === "travel2020") {
     // and check length of username
     document.querySelector(".main").classList.remove("hidden")
     let loginFields = document.querySelectorAll(".login")

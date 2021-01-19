@@ -12,7 +12,6 @@ import {
   displayTrips
 } from "./dom-updates"
 
-// this helper func is technically only like 16 lines
 export const parseResults = (data, userID, event) => {
   let usersTripsWithDestinationData = combineTripAndDestination(
     data[2].trips,
@@ -61,6 +60,7 @@ export const getDestinationData = (destinations, trips) => {
 }
 
 export const getFormData = () => {
+  let userID = Number(document.querySelector(".traveler-name").id)
   let date = document.querySelector(".create-trip-date").value.split("-").join("/")
   let newTrip = {
     userID,

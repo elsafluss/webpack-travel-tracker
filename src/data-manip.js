@@ -77,7 +77,7 @@ export const calculateFlightCost = (trip) => {
 }
 
 // this helper func is technically only like 16 lines
-export const parseResults = (data) => {
+export const parseResults = (data, userID) => {
   let usersTripsWithDestinationData = combineTripAndDestination(
     data[2].trips,
     data[1].destinations,

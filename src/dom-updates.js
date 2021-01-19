@@ -56,7 +56,8 @@ export const showThisTrip = (event) => {
     let trips = data[0].trips
     let destinations = data[1].destinations
     let tripData = combineTripAndDestination(trips, destinations, tripID)
-    // showTripData(tripData)
+    console.log('tripData'. tripData)
+    showTripData(tripData)
   })
 }
 

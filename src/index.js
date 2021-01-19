@@ -45,9 +45,9 @@ export const onStartup = (userID) => {
     .catch(error => console.log("error getting destinations", error))
   Promise.all([travelerResults, destinationsResults, tripsResults])
     .then(data => {
-      let currentTraveler = parseResults(data, userID)
+      const currentTraveler = parseResults(data, userID)
       displayUserName(currentTraveler)
-      let tripButtons = document.querySelectorAll(".show-trip")
+      const tripButtons = document.querySelectorAll(".show-trip")
       tripButtons.forEach(button => {
         button.addEventListener('click', showThisTrip)
       })

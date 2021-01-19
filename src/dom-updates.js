@@ -4,14 +4,16 @@ import {
   getTrips
 } from "./util.js"
 import {
-  userID
-} from "./index.js"
+  getFormData
+} from "./data-manip.js"
 import Trip from "./trip.js"
 
+const tripForm = document.querySelector(".create-trip-form")
 const createTripButton = document.querySelector(".submit-form")
+const resetButton = document.querySelector(".reset")
+
 const modalContainer = document.querySelector('.modal-container')
 const closeModal = document.querySelector(".close")
-
 closeModal.addEventListener("click", () => {
   modalContainer.classList.remove("show")
 })
@@ -62,6 +64,8 @@ export const showThisTrip = (event) => {
     let tripData = combineTripAndDestination(trips, destinations, userID, tripID)
     showTripData(tripData)
   })
+  createTripButton.disabled = true
+  createTripButton.classList.add("disabled")
 }
 
 function combineTripAndDestination(trips, destinations, userID, tripID) {
@@ -97,27 +101,26 @@ export const showTripData = (tripData) => {
 }
 
 export const displayPrice = () => {
-  const tripForm = document.querySelector(".create-trip-form")
-  let price = document.createElement('p')
-  let textNode = document.createTextNode(price)
-  tripForm.appendChild(textNode)
-  tripForm.setAttribute("class", `trip-price`)
-  createTripButton.disabled = false
-  createTripButton.classList.remove("disabled")
+  showPrice.value = 'calculating ...'
+  let newTrip = getFormData()
+  console.log(newTrip)
+  setTimeout(function () {
+    document.querySelector(
+      ".trip-price"
+    ).textContent = `Estimated cost is ${newTrip.totalCost}. Create this trip?`
+    createTripButton.disabled = false
+    createTripButton.classList.remove("disabled")
+    document.querySelector(".trip-price").textContent = `Estimated cost is ${newTrip.totalCost}. Create this trip?`
+    createTripButton.disabled = false
+    createTripButton.classList.remove("disabled")
+    showPrice.value = "how much?"
+  }, 3000)
 }
-
 
 const showPrice = document.querySelector(".show-price")
 showPrice.addEventListener("click", displayPrice)
 
-
-// const myTripsDisplay = document.querySelector(".all-trip")
-// let button = document.createElement("button")
-// let p = document.createElement("p")
-// let textNode = document.createTextNode(`${trip.date}`)
-// button.appendChild(textNode)
-// button.setAttribute("id", trip.id)
-// button.setAttribute("class", `show-trip ${trip.status} ${trip.future}`)
-// button.setAttribute("title", `${trip.totalCost}`)
-// myTripsDisplay.appendChild(button)
-// myTripsDisplay.appendChild(p)
+resetButton.addEventListener("click", () => {
+  let textNode = document.createTextNode(price)
+  tripForm.removeChild(textNode)
+})

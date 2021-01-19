@@ -17,7 +17,8 @@ const loginButton = document.querySelector(".log-in")
 
 document.querySelector(".submit-form").addEventListener("click", getFormData)
 
-const checkCredentials = () => {
+const checkCredentials = (event) => {
+  event.preventDefault()
   const username = document.querySelector(".username").value
   const password = document.querySelector(".password").value
   const userID = Number(username.slice(-2))
@@ -26,10 +27,10 @@ const checkCredentials = () => {
     document.querySelector(".main").classList.remove("hidden")
     let loginFields = document.querySelectorAll(".login")
     loginFields.forEach((field) => field.classList.add("hidden"))
+    onStartup(userID)
   } else {
     alert("Please check your username and password and try again.")
   }
-  onStartup(userID)
   return userID
 }
 

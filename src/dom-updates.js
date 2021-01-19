@@ -3,14 +3,16 @@ import {
   getDestinations,
   getTrips
 } from "./util.js"
-import {
-  getFormData
-} from "./data-manip.js"
-import Trip from "./trip.js"
+import { getFormData } from "./data-manip.js"
+import { pushTripToAPI } from "./trip.js"
 
 const tripForm = document.querySelector(".create-trip-form")
 const createTripButton = document.querySelector(".submit-form")
 const resetButton = document.querySelector(".reset")
+
+createTripButton.addEventListener("click", () => {
+  pushTripToAPI()
+})
 
 const modalContainer = document.querySelector('.modal-container')
 const closeModal = document.querySelector(".close")
@@ -66,6 +68,7 @@ export const showThisTrip = (event) => {
   })
   createTripButton.disabled = true
   createTripButton.classList.add("disabled")
+  document.querySelector(".trip-price").textContent = `Create another trip!`
 }
 
 function combineTripAndDestination(trips, destinations, userID, tripID) {
@@ -103,7 +106,6 @@ export const showTripData = (tripData) => {
 export const displayPrice = () => {
   showPrice.value = 'calculating ...'
   let newTrip = getFormData()
-  console.log(newTrip)
   setTimeout(function () {
     document.querySelector(
       ".trip-price"
@@ -121,6 +123,6 @@ const showPrice = document.querySelector(".show-price")
 showPrice.addEventListener("click", displayPrice)
 
 resetButton.addEventListener("click", () => {
-  let textNode = document.createTextNode(price)
+  let textNode = document.removeChild("trip-price")
   tripForm.removeChild(textNode)
 })

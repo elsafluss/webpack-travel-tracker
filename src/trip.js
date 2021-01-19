@@ -1,13 +1,15 @@
 import {
-  displayTrips
-} from "./dom-updates.js"
-import {
   calculateLodgingCost,
   calculateFlightCost
 } from "./data-manip.js"
 import {
+  displayTrips
+} from "./dom-updates.js"
+import {
   getDestinations,
-  pushNewTrip
+  pushNewTrip,
+  saveToLocalStorage,
+  getFromLocalStorage,
 } from "./util.js"
 
 class Trip {
@@ -47,6 +49,7 @@ class Trip {
           style: "currency",
           currency: "USD",
         })
+        saveToLocalStorage(newTrip)
         return newTrip
       })
       .catch((error) => console.log("error getting destinations", error))
@@ -66,15 +69,16 @@ class Trip {
     return tripObject
   }
 
-  pushTripToAPI(newTrip) {
-    pushNewTrip(newTrip.post).catch((error) =>
+  pushTripToAPI() {
+    let savedTrip = getFromLocalStorage()
+    console.log(savedTrip)
+    pushNewTrip(savedTrip.post).catch((error) =>
       console.log("error posting trip", error)
     )
-    displayTrips(newTrip)
-    return tripObject
+    displayTrips(savedTrip)
+    return savedTrip
   }
 }
 
 export const pushTripToAPI = Trip.prototype.pushTripToAPI
-export const displayTrip = Trip.prototype.displayTrip
 export default Trip

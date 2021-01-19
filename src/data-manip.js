@@ -1,7 +1,4 @@
 /* eslint-disable max-len */
-// import {
-//   userID
-// } from "."
 import Trip from "./trip"
 import Traveler, {
   catalogueTrip,
@@ -110,4 +107,3 @@ export const calculateFlightCost = (trip) => {
       1.1)
   }
 }
-

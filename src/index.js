@@ -1,5 +1,10 @@
 import './css/base.scss';
 import {
+  getATraveler,
+  getTrips,
+  getDestinations,
+} from "./util.js"
+import {
   getFormData,
   parseResults
 } from "./data-manip.js"
@@ -7,11 +12,6 @@ import {
   displayUserName,
   showThisTrip
 } from "./dom-updates.js"
-import {
-  getATraveler,
-  getTrips,
-  getDestinations,
-} from "./util.js"
 let userID
 const loginButton = document.querySelector(".log-in")
 

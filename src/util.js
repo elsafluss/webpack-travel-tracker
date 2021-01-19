@@ -28,5 +28,12 @@ export const pushNewTrip = (tripObject) => {
   })
     .then((response) => response.json())
     .then((response) => console.log(response))
-    
+}
+
+export const saveToLocalStorage = (data) => {
+  localStorage.setItem('saved trip', JSON.stringify(data))
+}
+
+export const getFromLocalStorage = () => {
+  return JSON.parse(localStorage.getItem('saved trip'))
 }

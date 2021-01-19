@@ -55,16 +55,18 @@ export const showThisTrip = (event) => {
   Promise.all([tripsResults, destinationsResults]).then((data) => {
     let trips = data[0].trips
     let destinations = data[1].destinations
-    let tripData = combineTripAndDestination(trips, destinations, tripID)
+    let tripData = combineTripAndDestination(trips, destinations, tripID, event)
     console.log('tripData'. tripData)
     showTripData(tripData)
   })
 }
 
-function combineTripAndDestination(trips, destinations, tripID) {
-  let clickedTrip = trips
-    .filter((trips) => trips.userID === userID)
-    .find((trip) => trip.id === Number(tripID))
+function combineTripAndDestination(trips, destinations, userID, event) {
+  const tripID = Number(event.target.id)
+  // console.log("tripID", tripID)
+  const usersTrips = trips.filter((trip) => trip.userID === Number(userID))
+  const clickedTrip = usersTrips.find((trip) => trip.id === tripID)
+  // console.log("clickedTrip", clickedTrip)
   let showThisDestination = destinations.find(
     (destination) => destination.id === clickedTrip.destinationID
   )

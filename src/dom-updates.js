@@ -8,6 +8,7 @@ import {
 } from "./index.js"
 import Trip from "./trip.js"
 
+const createTripButton = document.querySelector(".submit-form")
 const modalContainer = document.querySelector('.modal-container')
 const closeModal = document.querySelector(".close")
 
@@ -19,7 +20,7 @@ export const displayUserName = (traveler) => {
   const myNameDisplay = document.querySelector(".traveler-name")
   myNameDisplay.innerText = traveler.travelerName
   myNameDisplay.setAttribute("id", `${traveler.travelerID}`)
-  document.querySelector('.submit-form').disabled = true
+  createTripButton.disabled = true
   return traveler.travelerID
 }
 
@@ -101,7 +102,8 @@ export const displayPrice = () => {
   let textNode = document.createTextNode(price)
   tripForm.appendChild(textNode)
   tripForm.setAttribute("class", `trip-price`)
-  document.querySelector('.submit-form').disabled = false
+  createTripButton.disabled = false
+  createTripButton.classList.remove("disabled")
 }
 
 

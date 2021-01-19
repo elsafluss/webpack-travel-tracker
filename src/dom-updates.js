@@ -19,6 +19,7 @@ export const displayUserName = (traveler) => {
   const myNameDisplay = document.querySelector(".traveler-name")
   myNameDisplay.innerText = traveler.travelerName
   myNameDisplay.setAttribute("id", `${traveler.travelerID}`)
+  document.querySelector('.submit-form').disabled = true
   return traveler.travelerID
 }
 
@@ -94,3 +95,27 @@ export const showTripData = (tripData) => {
   }
 }
 
+export const displayPrice = () => {
+  const tripForm = document.querySelector(".create-trip-form")
+  let price = document.createElement('p')
+  let textNode = document.createTextNode(price)
+  tripForm.appendChild(textNode)
+  tripForm.setAttribute("class", `trip-price`)
+  document.querySelector('.submit-form').disabled = false
+}
+
+
+const showPrice = document.querySelector(".show-price")
+showPrice.addEventListener("click", displayPrice)
+
+
+// const myTripsDisplay = document.querySelector(".all-trip")
+// let button = document.createElement("button")
+// let p = document.createElement("p")
+// let textNode = document.createTextNode(`${trip.date}`)
+// button.appendChild(textNode)
+// button.setAttribute("id", trip.id)
+// button.setAttribute("class", `show-trip ${trip.status} ${trip.future}`)
+// button.setAttribute("title", `${trip.totalCost}`)
+// myTripsDisplay.appendChild(button)
+// myTripsDisplay.appendChild(p)

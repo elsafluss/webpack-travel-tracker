@@ -42,8 +42,6 @@ export const parseResults = (data, userID, event) => {
     displayTrips(trip, currentTraveler)
     // getAnnualSpending() based on date year
   })
-  // console.log("currentTraveler", currentTraveler)
-  // currentTraveler.travelerID
   return currentTraveler
 }
 

@@ -1,7 +1,4 @@
 /* eslint-disable max-len */
-import {
-  userID
-} from "."
 import Trip from "./trip"
 import Traveler, {
   catalogueTrip,
@@ -42,8 +39,6 @@ export const parseResults = (data, userID, event) => {
     displayTrips(trip, currentTraveler)
     // getAnnualSpending() based on date year
   })
-  // console.log("currentTraveler", currentTraveler)
-  // currentTraveler.travelerID
   return currentTraveler
 }
 
@@ -70,7 +65,8 @@ export const getFormData = () => {
     destination: document.querySelector(".choose-destination").value,
   }
   let createdTrip = new Trip(newTrip)
-  createdTrip.matchWithDestinationData(createdTrip)
+  newTrip = createdTrip.matchWithDestinationData(createdTrip)
+  return createdTrip
 }
 
 export const combineTripAndDestination = (allTrips, allDestinations, userID) => {
@@ -111,4 +107,3 @@ export const calculateFlightCost = (trip) => {
       1.1)
   }
 }
-

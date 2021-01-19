@@ -1,5 +1,10 @@
 import './css/base.scss';
 import {
+  getATraveler,
+  getTrips,
+  getDestinations,
+} from "./util.js"
+import {
   getFormData,
   parseResults
 } from "./data-manip.js"
@@ -7,11 +12,6 @@ import {
   displayUserName,
   showThisTrip
 } from "./dom-updates.js"
-import {
-  getATraveler,
-  getTrips,
-  getDestinations,
-} from "./util.js"
 let userID
 const loginButton = document.querySelector(".log-in")
 
@@ -45,9 +45,9 @@ export const onStartup = (userID) => {
     .catch(error => console.log("error getting destinations", error))
   Promise.all([travelerResults, destinationsResults, tripsResults])
     .then(data => {
-      let currentTraveler = parseResults(data, userID)
+      const currentTraveler = parseResults(data, userID)
       displayUserName(currentTraveler)
-      let tripButtons = document.querySelectorAll(".show-trip")
+      const tripButtons = document.querySelectorAll(".show-trip")
       tripButtons.forEach(button => {
         button.addEventListener('click', showThisTrip)
       })

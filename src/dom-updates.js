@@ -3,14 +3,19 @@ import {
   getDestinations,
   getTrips
 } from "./util.js"
-import {
-  userID
-} from "./index.js"
-import Trip from "./trip.js"
+import { getFormData } from "./data-manip.js"
+import { pushTripToAPI } from "./trip.js"
+
+const tripForm = document.querySelector(".create-trip-form")
+const createTripButton = document.querySelector(".submit-form")
+const resetButton = document.querySelector(".reset")
+
+createTripButton.addEventListener("click", () => {
+  pushTripToAPI()
+})
 
 const modalContainer = document.querySelector('.modal-container')
 const closeModal = document.querySelector(".close")
-
 closeModal.addEventListener("click", () => {
   modalContainer.classList.remove("show")
 })
@@ -19,6 +24,7 @@ export const displayUserName = (traveler) => {
   const myNameDisplay = document.querySelector(".traveler-name")
   myNameDisplay.innerText = traveler.travelerName
   myNameDisplay.setAttribute("id", `${traveler.travelerID}`)
+  createTripButton.disabled = true
   return traveler.travelerID
 }
 
@@ -60,6 +66,9 @@ export const showThisTrip = (event) => {
     let tripData = combineTripAndDestination(trips, destinations, userID, tripID)
     showTripData(tripData)
   })
+  createTripButton.disabled = true
+  createTripButton.classList.add("disabled")
+  document.querySelector(".trip-price").textContent = `Create another trip!`
 }
 
 function combineTripAndDestination(trips, destinations, userID, tripID) {
@@ -94,3 +103,26 @@ export const showTripData = (tripData) => {
   }
 }
 
+export const displayPrice = () => {
+  showPrice.value = 'calculating ...'
+  let newTrip = getFormData()
+  setTimeout(function () {
+    document.querySelector(
+      ".trip-price"
+    ).textContent = `Estimated cost is ${newTrip.totalCost}. Create this trip?`
+    createTripButton.disabled = false
+    createTripButton.classList.remove("disabled")
+    document.querySelector(".trip-price").textContent = `Estimated cost is ${newTrip.totalCost}. Create this trip?`
+    createTripButton.disabled = false
+    createTripButton.classList.remove("disabled")
+    showPrice.value = "how much?"
+  }, 3000)
+}
+
+const showPrice = document.querySelector(".show-price")
+showPrice.addEventListener("click", displayPrice)
+
+resetButton.addEventListener("click", () => {
+  let textNode = document.removeChild("trip-price")
+  tripForm.removeChild(textNode)
+})

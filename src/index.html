@@ -45,12 +45,12 @@
       <article class="amount-spent card">
         <div class="card-header">how much I've spent</div>
         <div class="card-text total-spent"></div>
-        <p class="small-text">Mouse over a trip's date to see its cost.</p>
-        <p class="small-text">Click on a trip date to see its details.</p>
-        <p class="small-text">A light border indicates an approved trip.</p>
-        <p class="small-text">A dark border indicates a pending trip.</p>
-        <p class="small-text">A light button indicates a past trip.</p>
-        <p class="small-text">A dark button indicates a future trip.</p>
+        <p class="small-text">Mouse over a trip's date to see its cost. <br>
+          Click on a trip date to see its details. <br>
+          A light border indicates an approved trip. <br>
+          A dark border indicates a pending trip. <br>
+          A light button indicates a past trip. <br>
+          A dark button indicates a future trip.</p>
       </article>
       <article class="create-trip card">
         <div class="card-header">create a trip</div>
@@ -68,7 +68,9 @@
             <select name="destination-list" id="choose-destination" class="choose-destination" required>
               <option value="place">Select a destination</option>
             </select><br><br>
-            <input type="button" class="submit-form btn" value="create trip">
+            <input type="button" class="show-price btn" value="how much?">
+            <p class="trip-price small-text"></p>
+            <input type="button" class="submit-form disabled btn" value="create trip">
             <input type="reset" class="reset btn" value="reset form">
           </form>
         </div>
@@ -78,9 +80,3 @@
 </body>
 
 </html>
-
-
-
-
-<!-- <img src="./images/background-image.jpg" alt="van by ocean" height="100vh" width="100vh"> -->
-<!-- Do not include the index.js or main.bundle.js file here - it is done automatically by the webpack server -->

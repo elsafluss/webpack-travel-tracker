@@ -1,10 +1,10 @@
 export const userID = 31
 
 import './css/base.scss';
+import { getFormData, parseResults } from "./data-manip.js"
 import {
-  getFormData,
-  parseResults
-} from "./data-manip.js"
+  checkCredentials
+} from "./log-in.js"
 import {
   displayUserName,
   showThisTrip,
@@ -14,6 +14,10 @@ import {
   getTrips,
   getDestinations,
 } from "./util.js"
+
+const loginButton = document.querySelector(".log-in")
+
+loginButton.addEventListener("click", checkCredentials)
 
 window.onload = onStartup()
 

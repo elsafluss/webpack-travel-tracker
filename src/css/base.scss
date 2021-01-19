@@ -5,6 +5,10 @@
 @import 'desktop';
 @import 'card';
 
+main {
+  display: none;
+}
+
 body {
   background-image: url("../images/background-desert.png");
   background-repeat: no-repeat;

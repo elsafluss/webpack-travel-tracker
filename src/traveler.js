@@ -1,6 +1,6 @@
 class Traveler {
-  constructor(traveler, trips, destinations) {
-    (this.travelerID = traveler.id),
+  constructor(traveler, trips, destinations, userID) {
+    (this.travelerID = userID),
     (this.travelerName = traveler.name),
     (this.travelerType = traveler.travelerType),
     (this.trips = trips),

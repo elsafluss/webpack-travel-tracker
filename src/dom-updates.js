@@ -80,7 +80,6 @@ function combineTripAndDestination(trips, destinations, tripID) {
 }
 
 export const showTripData = (tripData) => {
-  console.log(tripData)
   modalContainer.classList.add('show')
   document.querySelector(".destination").innerText = `${tripData.destination}`
   document.querySelector('.trip-photo').setAttribute('src', `${tripData.image}`)

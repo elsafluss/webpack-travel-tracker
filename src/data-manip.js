@@ -12,6 +12,39 @@ import {
   displayTrips
 } from "./dom-updates"
 
+// this helper func is technically only like 16 lines
+export const parseResults = (data, userID) => {
+  let usersTripsWithDestinationData = combineTripAndDestination(
+    data[2].trips,
+    data[1].destinations,
+    userID
+  )
+  let destinationData = getDestinationData(
+    data[1].destinations,
+    usersTripsWithDestinationData
+  )
+  fillDestinationList(data[1].destinations)
+  let currentTraveler = new Traveler(
+    data[0],
+    usersTripsWithDestinationData,
+    destinationData,
+    userID
+  )
+  usersTripsWithDestinationData.forEach((trip) => {
+    trip.totalCost = (
+      calculateLodgingCost(trip) + calculateFlightCost(trip)
+    ).toLocaleString("en-US", {
+      style: "currency",
+      currency: "USD"
+    })
+    catalogueTrip(trip, currentTraveler)
+    sortTrip(trip, currentTraveler)
+    displayTrips(trip, currentTraveler)
+    // getAnnualSpending() based on date year
+  })
+  return currentTraveler
+}
+
 export const getDestinationData = (destinations, trips) => {
   let userDestinationData = []
   userDestinationData = destinations.filter((destination) => {
@@ -76,34 +109,3 @@ export const calculateFlightCost = (trip) => {
   }
 }
 
-// this helper func is technically only like 16 lines
-export const parseResults = (data) => {
-  let usersTripsWithDestinationData = combineTripAndDestination(
-    data[2].trips,
-    data[1].destinations,
-    userID
-  )
-  let destinationData = getDestinationData(
-    data[1].destinations,
-    usersTripsWithDestinationData
-  )
-  fillDestinationList(data[1].destinations)
-  let currentTraveler = new Traveler(
-    data[0],
-    usersTripsWithDestinationData,
-    destinationData
-  )
-  usersTripsWithDestinationData.forEach((trip) => {
-    trip.totalCost = (
-      calculateLodgingCost(trip) + calculateFlightCost(trip)
-    ).toLocaleString("en-US", {
-      style: "currency",
-      currency: "USD"
-    })
-    catalogueTrip(trip, currentTraveler)
-    sortTrip(trip, currentTraveler)
-    displayTrips(trip)
-    // getAnnualSpending() based on date year
-  })
-  return currentTraveler
-}

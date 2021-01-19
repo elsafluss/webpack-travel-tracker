@@ -8,7 +8,8 @@ header {
     margin: auto;
 }
 
-.header-text {
+.header-text, 
+label {
     text-shadow: 1px 1px 1px $light;
 }
 
@@ -20,6 +21,10 @@ header {
     list-style: none;
     margin: auto;
     width: 100%;
+}
+
+label {
+    font-size: 150%;
 }
 
 .btn {

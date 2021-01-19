@@ -1,5 +1,3 @@
-export const userID = 31
-
 import './css/base.scss';
 import {
   getFormData,
@@ -7,20 +5,38 @@ import {
 } from "./data-manip.js"
 import {
   displayUserName,
-  showThisTrip,
+  showThisTrip
 } from "./dom-updates.js"
 import {
   getATraveler,
   getTrips,
   getDestinations,
 } from "./util.js"
+let userID
+const loginButton = document.querySelector(".log-in")
 
-window.onload = onStartup()
+document.querySelector(".submit-form").addEventListener("click", getFormData)
 
-document.querySelector(".submit-form")
-  .addEventListener("click", getFormData)
+const checkCredentials = (event) => {
+  event.preventDefault()
+  const username = document.querySelector(".username").value
+  const password = document.querySelector(".password").value
+  const userID = Number(username.slice(-2))
+  if (username.includes("username") && password === "travel2020") {
+    // and check length of username
+    document.querySelector(".main").classList.remove("hidden")
+    let loginFields = document.querySelectorAll(".login")
+    loginFields.forEach((field) => field.classList.add("hidden"))
+    onStartup(userID)
+  } else {
+    alert("Please check your username and password and try again.")
+  }
+  return userID
+}
 
-function onStartup() {
+loginButton.addEventListener("click", checkCredentials)
+
+export const onStartup = (userID) => {
   const travelerResults = getATraveler(userID)
     .catch(error => console.log("error getting traveler", error))
   const tripsResults = getTrips()
@@ -29,12 +45,15 @@ function onStartup() {
     .catch(error => console.log("error getting destinations", error))
   Promise.all([travelerResults, destinationsResults, tripsResults])
     .then(data => {
-      let currentTraveler = parseResults(data)
+      let currentTraveler = parseResults(data, userID)
       displayUserName(currentTraveler)
       let tripButtons = document.querySelectorAll(".show-trip")
       tripButtons.forEach(button => {
         button.addEventListener('click', showThisTrip)
       })
     })
+}
 
+export {
+  userID as userID
 }

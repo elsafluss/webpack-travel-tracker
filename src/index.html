@@ -17,21 +17,23 @@
         <img src="" alt="" class="trip-photo">
         <h2><span class="traveler-count"></span>
           <span class="friend-count"> of my friends and me,</span>
-          <span class="trip-length"></span> glorious days in 
+          <span class="trip-length"></span> glorious days in
           <span class="destination"></span> on
           <span class="departure"></span>!</h2>
       </div>
     </div>
     <h1 class="header-text">travel better</h1>
     <div class="nav-area">
-      <ul>
-        <li class="my-trips btn">my trips</li>
-        <li class="destinations btn">destinations</li>
-        <li class="log-in btn">log in</li>
-      </ul>
+      <form>
+        <label for="username" class="login">username</label>
+        <input type="text" class="login username" id="username">
+        <label for="password" class="login">password</label>
+        <input type="password" class="login password" id="password">
+        <button type="submit" class="log-in login btn">log in</li>
+      </form>
     </div>
   </header>
-  <main class="main">
+  <main class="main hidden">
     <section class="traveler-name">traveler's name</section>
     <section class="container">
       <article class="all-trips card">
@@ -39,12 +41,16 @@
         <div class="all-trips-text card-text">
           <p class="all-trip"></p>
         </div>
-        <p class="small-text">mouse over a trip's date to see its cost</p>
-        <p class="small-text">click on a trip date to see its details</p>
       </article>
       <article class="amount-spent card">
         <div class="card-header">how much I've spent</div>
         <div class="card-text total-spent"></div>
+        <p class="small-text">Mouse over a trip's date to see its cost.</p>
+        <p class="small-text">Click on a trip date to see its details.</p>
+        <p class="small-text">A light border indicates an approved trip.</p>
+        <p class="small-text">A dark border indicates a pending trip.</p>
+        <p class="small-text">A light button indicates a past trip.</p>
+        <p class="small-text">A dark button indicates a future trip.</p>
       </article>
       <article class="create-trip card">
         <div class="card-header">create a trip</div>

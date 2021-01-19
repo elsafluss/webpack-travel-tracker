@@ -1,116 +1,109 @@
 /* eslint-disable max-len */
-import { userID } from "."
+import {
+  userID
+} from "."
 import Trip from "./trip"
-// import { displayTrip } from "./trip"
+import Traveler, {
+  catalogueTrip,
+  sortTrip
+} from "./traveler"
+import {
+  fillDestinationList,
+  displayTrips
+} from "./dom-updates"
 
-export const getDestinationData = (destinations) => {
-  let destinationData = destinations.map((destinations) => [
-    destinations.id,
-    destinations.estimatedLodgingCostPerDay,
-    destinations.estimatedFlightCostPerPerson,
-    destinations.destination,
-    destinations.image,
-  ])
-  let allDestinationData = []
-  destinationData.reduce((total, value) => {
-    allDestinationData.push({
-      destinationID: value[0],
-      lodgingPerDay: value[1],
-      flightCost: value[2],
-      destinationName: value[3],
-      destinationImage: value[4],
-    })
-    return allDestinationData
-  }, {})
-  return allDestinationData
-}
-
-export const getTripData = (trips, userID) => {
-  let tripData = trips
-    .filter((trips) => trips.userID === userID)
-    .map((trip) => [
-      trip.id,
-      trip.destinationID,
-      trip.duration,
-      trip.travelers,
-      trip.date,
-      trip.status,
-      trip.suggestedActivities,
-      trip.userID
-    ])
-  let aggregateTripData = []
-  tripData.reduce((_total, value) => {
-    aggregateTripData.push({
-      tripID: value[0],
-      destinationID: value[1],
-      tripDuration: value[2],
-      travelerCount: value[3],
-      date: value[4],
-      status: value[5],
-      suggestedActivities: value[6],
-      userID: value[7]
-    })
-    return aggregateTripData
-  }, {})
-  return aggregateTripData
-}
-
-export const getDestinationDataForTheseTrips = (destinations, trips) => {
-  let specificDestinationData = []
-  specificDestinationData = destinations.filter((destination) => {
-    let destID = destination.destinationID
-    let matchingTrip = trips.find((trip) => trip.destinationID === destID)
+export const getDestinationData = (destinations, trips) => {
+  let userDestinationData = []
+  userDestinationData = destinations.filter((destination) => {
+    let matchingTrip = trips.find(trip => trip.destinationID === destination.id)
     if (matchingTrip) {
-      specificDestinationData.push(destination)
+      userDestinationData.push(destination)
     }
     return matchingTrip
   })
-  return specificDestinationData
-}
-
-export const calculateTripCost = (specificDestinationData, aggregateTripData) => {
-  let lodgingCost = 0
-  specificDestinationData.filter((destination) => {
-    let matchingTrip = aggregateTripData.find(
-      (trip) => trip.destinationID === destination.destinationID
-    )
-    if (matchingTrip) {
-      let numberOfPeople = matchingTrip.travelerCount
-      lodgingCost +=
-        destination.lodgingPerDay * matchingTrip.tripDuration * numberOfPeople
-    }
-    return lodgingCost
-  })
-  return lodgingCost * 1.1
-}
-
-export const calculateFlightCost = (specificDestinationData, aggregateTripData) => {
-  let flightCost = 0
-  specificDestinationData.filter((destination) => {
-    let matchingTrip = aggregateTripData.find(
-      (trip) => trip.destinationID === destination.destinationID
-    )
-    if (matchingTrip) {
-      flightCost += destination.flightCost * matchingTrip.travelerCount
-    }
-    return flightCost
-  })
-  return flightCost * 1.1
+  return userDestinationData
 }
 
 export const getFormData = () => {
-  let date = document
-    .querySelector(".create-trip-date")
-    .value.split("-")
-    .join("/")
+  let date = document.querySelector(".create-trip-date").value.split("-").join("/")
   let newTrip = {
     userID,
     date,
-    duration: document.querySelector(".create-trip-duration").value,
-    travelers: document.querySelector(".create-trip-numPeople").value,
+    duration: Number(document.querySelector(".create-trip-duration").value),
+    travelers: Number(document.querySelector(".create-trip-numPeople").value),
     destination: document.querySelector(".choose-destination").value,
   }
   let createdTrip = new Trip(newTrip)
-  createdTrip.matchWithDestinationData(newTrip)
+  createdTrip.matchWithDestinationData(createdTrip)
 }
 
+export const combineTripAndDestination = (allTrips, allDestinations, userID) => {
+  return allTrips.filter(trip => {
+    if (trip.userID === userID) {
+      return allDestinations.filter((destination) => {
+        if (destination.id === trip.destinationID) {
+          trip.destinationData = destination
+        }
+      })
+    }
+  })
+}
+
+export const calculateLodgingCost = (trip) => {
+  if (trip.newTripID > 50) {
+    return (
+      trip.lodgingCost *
+      trip.duration *
+      trip.travelers *
+      1.1
+    )
+  } else {
+    return (trip.destinationData.estimatedLodgingCostPerDay *
+      trip.duration *
+      trip.travelers *
+      1.1)
+  }
+}
+
+export const calculateFlightCost = (trip) => {
+  if (trip.newTripID > 50) {
+    return trip.flightCost * trip.duration * trip.travelers * 1.1
+  } else {
+    return (trip.destinationData.estimatedFlightCostPerPerson *
+      trip.duration *
+      trip.travelers *
+      1.1)
+  }
+}
+
+// this helper func is technically only like 16 lines
+export const parseResults = (data) => {
+  let usersTripsWithDestinationData = combineTripAndDestination(
+    data[2].trips,
+    data[1].destinations,
+    userID
+  )
+  let destinationData = getDestinationData(
+    data[1].destinations,
+    usersTripsWithDestinationData
+  )
+  fillDestinationList(data[1].destinations)
+  let currentTraveler = new Traveler(
+    data[0],
+    usersTripsWithDestinationData,
+    destinationData
+  )
+  usersTripsWithDestinationData.forEach((trip) => {
+    trip.totalCost = (
+      calculateLodgingCost(trip) + calculateFlightCost(trip)
+    ).toLocaleString("en-US", {
+      style: "currency",
+      currency: "USD"
+    })
+    catalogueTrip(trip, currentTraveler)
+    sortTrip(trip, currentTraveler)
+    displayTrips(trip)
+    // getAnnualSpending() based on date year
+  })
+  return currentTraveler
+}

@@ -4,8 +4,10 @@ $dark: darken($medium, 40%);
 $highlight: #AA744E;
 $lowlight: #899878ff;
 
-$font: 'Noto Sans HK', sans-serif;
-$handwriting: 'Sedgwick Ave', cursive;
+$font: 'Noto Sans HK',
+sans-serif;
+$handwriting: 'Sedgwick Ave',
+cursive;
 $transparent: transparentize($light, .6);
 $box-shadow: 3px 3px 6px $dark;
 

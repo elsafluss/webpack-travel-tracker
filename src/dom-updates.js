@@ -4,7 +4,7 @@ import {
   getTrips
 } from "./util.js"
 import { getFormData } from "./data-manip.js"
-import { pushTripToAPI } from "./trip.js"
+import Trip, { pushTripToAPI } from "./trip.js"
 
 const tripForm = document.querySelector(".create-trip-form")
 const createTripButton = document.querySelector(".submit-form")
@@ -28,7 +28,8 @@ export const displayUserName = (traveler) => {
   return traveler.travelerID
 }
 
-export const displayTrips = (trip) => {
+export const displayTrips = (trip) => { //currenttraveler
+  console.log(trip)
   const myTripsDisplay = document.querySelector(".all-trip")
   let button = document.createElement("button")
   let p = document.createElement("p")
@@ -36,6 +37,7 @@ export const displayTrips = (trip) => {
   button.appendChild(textNode)
   button.setAttribute("id", trip.id)
   button.setAttribute("class", `show-trip ${trip.status} ${trip.future}`)
+  button.addEventListener("click", showThisTrip)
   button.setAttribute("title", `${trip.totalCost}`)
   myTripsDisplay.appendChild(button)
   myTripsDisplay.appendChild(p)

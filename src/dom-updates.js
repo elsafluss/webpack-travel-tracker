@@ -7,15 +7,18 @@ import {
   userID
 } from "./index.js"
 import Trip from "./trip.js"
-import { calculateFlightCost } from "./data-manip.js"
 
 const modalContainer = document.querySelector('.modal-container')
 const closeModal = document.querySelector(".close")
 
+closeModal.addEventListener("click", () => {
+  modalContainer.classList.remove("show")
+})
+
 export const displayUserName = (traveler) => {
   const myNameDisplay = document.querySelector(".traveler-name")
-  myNameDisplay.innerText = traveler.name
-  return traveler.id
+  myNameDisplay.innerText = traveler.travelerName
+  return traveler.travelerID
 }
 
 export const displayTrips = (trip) => {
@@ -24,30 +27,21 @@ export const displayTrips = (trip) => {
   let p = document.createElement("p")
   let textNode = document.createTextNode(`${trip.date}`)
   button.appendChild(textNode)
-  button.setAttribute("id", trip.tripID)
+  button.setAttribute("id", trip.id)
   button.setAttribute("class", `show-trip ${trip.status} ${trip.future}`)
+  button.setAttribute("title", `${trip.totalCost}`)
   myTripsDisplay.appendChild(button)
   myTripsDisplay.appendChild(p)
-  // calculateTripCost() pass in the right data
-  // calculateFlightCost() pass in the right data
 }
 
-export const fillDestinationList = (destinationData) => {
-  let sortedByName = destinationData.sort((a, b) => {
-    if (a.destinationName < b.destinationName) {
-      return -1
-    }
-  })
-  let listOfDestinationNames = sortedByName.map(
-    (destination) => destination.destinationName
-  )
-  listOfDestinationNames.forEach(function (destination) {
+export const fillDestinationList = (destinations) => {
+  destinations.forEach((destination) => {
     let opt = document.createElement("option")
-    opt.innerHTML = destination
-    opt.value = destination
+    opt.innerHTML = destination.destination
+    opt.value = destination.destination
     document.querySelector(".choose-destination").appendChild(opt)
   })
-  return listOfDestinationNames
+  return destinations
 }
 
 export const showThisTrip = (event) => {
@@ -61,12 +55,12 @@ export const showThisTrip = (event) => {
   Promise.all([tripsResults, destinationsResults]).then((data) => {
     let trips = data[0].trips
     let destinations = data[1].destinations
-    let tripData = getTripData(trips, destinations, tripID)
-    showTripData(tripData)
+    let tripData = combineTripAndDestination(trips, destinations, tripID)
+    // showTripData(tripData)
   })
 }
 
-function getTripData(trips, destinations, tripID) {
+function combineTripAndDestination(trips, destinations, tripID) {
   let clickedTrip = trips
     .filter((trips) => trips.userID === userID)
     .find((trip) => trip.id === Number(tripID))
@@ -85,6 +79,7 @@ function getTripData(trips, destinations, tripID) {
 }
 
 export const showTripData = (tripData) => {
+  console.log(tripData)
   modalContainer.classList.add('show')
   document.querySelector(".destination").innerText = `${tripData.destination}`
   document.querySelector('.trip-photo').setAttribute('src', `${tripData.image}`)
@@ -97,9 +92,5 @@ export const showTripData = (tripData) => {
     document.querySelector(".traveler-count").innerText = `${tripData.travelers - 1}`
     document.querySelector(".friend-count").textContent = " of my friends and me,"    
   }
-  document.querySelector(".cost").textContent = `${tripData.totalCost}`
 }
 
-closeModal.addEventListener("click", () => {
-  modalContainer.classList.remove("show")
-})

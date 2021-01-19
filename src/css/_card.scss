@@ -2,6 +2,7 @@
     // border: 1px solid $light;
     display: flex;
     flex-direction: column;
+    justify-content: flex-start;
     box-shadow: $box-shadow;
     overflow: visible;
     background-color: $transparent;
@@ -15,12 +16,21 @@
         margin: 0 auto 1em auto;
     }
 
-    img {
-        // border: 1px solid $light;
-        margin: 1em auto 2em auto;
-        height: 75px;
-        width: auto;
+    .false {
+        background-color: $dark;
+        color: $light
+    }
 
+    .true {
+        background-color: $light;
+    }
+
+    .approved {
+        border: yellow 2px solid;
+    }
+
+    .pending {
+        border: green 2px solid;
     }
 }
 
@@ -34,30 +44,21 @@
     padding-bottom: 0;
 }
 
-.card-image {
-    border: 1px solid $dark;
-    height: 5em;
-    margin: 0 1em 2em 1em;
-    text-align: center;
-    background-color: $lowlight;
-    color: $dark;
-    border-radius: 5px;
-    border: none;
-}
-
 .card-text {
     // border: 1px solid $light;
-    // display: flex;
-    // flex-direction: column;
+    background-color: lighten($transparent, 10%);
+    border-radius: 5px;
     height: auto;
     line-height: 1.6;
-    min-height: 50%;
-    text-align: justify;
-    padding: 1em;
-    background-color: lighten($transparent, 10%);
     margin: 0 1em 1em 1em;
     padding: .5em;
-    border-radius: 5px;
+    text-align: justify;
+}
+
+.small-text {
+    margin: 0;
+    padding: 0 1em;
+    font-size: 90%;
 }
 
 .all-trip {

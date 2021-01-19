@@ -1,4 +1,8 @@
 /* eslint-disable max-len */
+import { userID } from "."
+import Trip from "./trip"
+// import { displayTrip } from "./trip"
+
 export const getDestinationData = (destinations) => {
   let destinationData = destinations.map((destinations) => [
     destinations.id,
@@ -24,14 +28,27 @@ export const getDestinationData = (destinations) => {
 export const getTripData = (trips, userID) => {
   let tripData = trips
     .filter((trips) => trips.userID === userID)
-    .map((trip) => [trip.id, trip.destinationID, trip.duration, trip.travelers])
+    .map((trip) => [
+      trip.id,
+      trip.destinationID,
+      trip.duration,
+      trip.travelers,
+      trip.date,
+      trip.status,
+      trip.suggestedActivities,
+      trip.userID
+    ])
   let aggregateTripData = []
-  tripData.reduce((total, value) => {
+  tripData.reduce((_total, value) => {
     aggregateTripData.push({
       tripID: value[0],
       destinationID: value[1],
       tripDuration: value[2],
       travelerCount: value[3],
+      date: value[4],
+      status: value[5],
+      suggestedActivities: value[6],
+      userID: value[7]
     })
     return aggregateTripData
   }, {})
@@ -40,9 +57,9 @@ export const getTripData = (trips, userID) => {
 
 export const getDestinationDataForTheseTrips = (destinations, trips) => {
   let specificDestinationData = []
-  specificDestinationData = destinations.filter(destination => {
+  specificDestinationData = destinations.filter((destination) => {
     let destID = destination.destinationID
-    let matchingTrip = trips.find(trip => trip.destinationID === destID)
+    let matchingTrip = trips.find((trip) => trip.destinationID === destID)
     if (matchingTrip) {
       specificDestinationData.push(destination)
     }
@@ -80,3 +97,20 @@ export const calculateFlightCost = (specificDestinationData, aggregateTripData) 
   })
   return flightCost * 1.1
 }
+
+export const getFormData = () => {
+  let date = document
+    .querySelector(".create-trip-date")
+    .value.split("-")
+    .join("/")
+  let newTrip = {
+    userID,
+    date,
+    duration: document.querySelector(".create-trip-duration").value,
+    travelers: document.querySelector(".create-trip-numPeople").value,
+    destination: document.querySelector(".choose-destination").value,
+  }
+  let createdTrip = new Trip(newTrip)
+  createdTrip.matchWithDestinationData(newTrip)
+}
+

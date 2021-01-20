@@ -16,7 +16,6 @@ body {
 }
 
 .container {
-  // border: 1px solid $light;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   gap: 2em;
@@ -25,7 +24,6 @@ body {
 }
 
 .traveler-name {
-  // border: 1px solid $light;
   grid-column: 1 / 4;
   margin: auto;
   text-align: center;

@@ -3,8 +3,12 @@ import {
   getDestinations,
   getTrips
 } from "./util.js"
-import { getFormData } from "./data-manip.js"
-import Trip, { pushTripToAPI } from "./trip.js"
+import {
+  getFormData
+} from "./data-manip.js"
+import Trip, {
+  pushTripToAPI
+} from "./trip.js"
 
 const tripForm = document.querySelector(".create-trip-form")
 const createTripButton = document.querySelector(".submit-form")
@@ -28,8 +32,11 @@ export const displayUserName = (traveler) => {
   return traveler.travelerID
 }
 
-export const displayTrips = (trip) => { //currenttraveler
-  console.log(trip)
+export const displayTrips = (trip) => {
+  const tripCost = trip.totalCost.toLocaleString("en-US", {
+    style: "currency",
+    currency: "USD",
+  })
   const myTripsDisplay = document.querySelector(".all-trip")
   let button = document.createElement("button")
   let p = document.createElement("p")
@@ -38,7 +45,7 @@ export const displayTrips = (trip) => { //currenttraveler
   button.setAttribute("id", trip.id)
   button.setAttribute("class", `show-trip ${trip.status} ${trip.future}`)
   button.addEventListener("click", showThisTrip)
-  button.setAttribute("title", `${trip.totalCost}`)
+  button.setAttribute("title", `${tripCost}`)
   myTripsDisplay.appendChild(button)
   myTripsDisplay.appendChild(p)
 }
@@ -70,7 +77,7 @@ export const showThisTrip = (event) => {
   })
   createTripButton.disabled = true
   createTripButton.classList.add("disabled")
-  document.querySelector(".trip-price").textContent = `Create another trip!`
+  document.querySelector(".trip-price").textContent = `Create a trip!`
 }
 
 function combineTripAndDestination(trips, destinations, userID, tripID) {
@@ -101,20 +108,21 @@ export const showTripData = (tripData) => {
     document.querySelector('.friend-count').textContent = 'Just me,'
   } else {
     document.querySelector(".traveler-count").innerText = `${tripData.travelers - 1}`
-    document.querySelector(".friend-count").textContent = " of my friends and me,"    
+    document.querySelector(".friend-count").textContent = " of my friends and me,"
   }
 }
 
 export const displayPrice = () => {
-  showPrice.value = 'calculating ...'
   let newTrip = getFormData()
-  setTimeout(function () {
+  showPrice.value = 'calculating ...'
+  setTimeout(() => {
+    let tripCost = newTrip.totalCost.toLocaleString("en-US", {
+      style: "currency",
+      currency: "USD",
+    })
     document.querySelector(
       ".trip-price"
-    ).textContent = `Estimated cost is ${newTrip.totalCost}. Create this trip?`
-    createTripButton.disabled = false
-    createTripButton.classList.remove("disabled")
-    document.querySelector(".trip-price").textContent = `Estimated cost is ${newTrip.totalCost}. Create this trip?`
+    ).textContent = `Estimated cost is ${tripCost}. Create this trip?`
     createTripButton.disabled = false
     createTripButton.classList.remove("disabled")
     showPrice.value = "how much?"
@@ -125,6 +133,7 @@ const showPrice = document.querySelector(".show-price")
 showPrice.addEventListener("click", displayPrice)
 
 resetButton.addEventListener("click", () => {
-  let textNode = document.removeChild("trip-price")
-  tripForm.removeChild(textNode)
+  createTripButton.disabled = true
+  createTripButton.classList.add("disabled")
+  document.querySelector(".trip-price").textContent = `Create a trip!`
 })

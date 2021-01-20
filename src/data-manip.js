@@ -2,7 +2,8 @@
 import Trip from "./trip"
 import Traveler, {
   catalogueTrip,
-  sortTrip
+  sortTrip,
+  calculateAnnualSpend,
 } from "./traveler"
 import {
   fillDestinationList,
@@ -28,17 +29,12 @@ export const parseResults = (data, userID, event) => {
     userID
   )
   usersTripsWithDestinationData.forEach((trip) => {
-    trip.totalCost = (
-      calculateLodgingCost(trip) + calculateFlightCost(trip)
-    ).toLocaleString("en-US", {
-      style: "currency",
-      currency: "USD",
-    })
+    trip.totalCost = calculateFlightCost(trip) + calculateLodgingCost(trip)
     catalogueTrip(trip, currentTraveler)
     sortTrip(trip, currentTraveler)
     displayTrips(trip)
-    // getAnnualSpending() based on date year
   })
+  calculateAnnualSpend(currentTraveler) 
   return currentTraveler
 }
 
@@ -82,13 +78,12 @@ export const combineTripAndDestination = (allTrips, allDestinations, userID) => 
 }
 
 export const calculateLodgingCost = (trip) => {
-  if (trip.id > 50) {
+  if (trip.id > 200) {
     return (
       trip.lodgingCost *
       trip.duration *
       trip.travelers *
-      1.1
-    )
+      1.1)
   } else {
     return (trip.destinationData.estimatedLodgingCostPerDay *
       trip.duration *
@@ -98,7 +93,7 @@ export const calculateLodgingCost = (trip) => {
 }
 
 export const calculateFlightCost = (trip) => {
-  if (trip.id > 50) {
+  if (trip.id > 200) {
     return trip.flightCost * trip.duration * trip.travelers * 1.1
   } else {
     return (trip.destinationData.estimatedFlightCostPerPerson *

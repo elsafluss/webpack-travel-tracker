@@ -1,10 +1,9 @@
 header {
-    // border: 1px solid $light;
     align-items: center;
     background-color: darken($medium, 5%);
     display: flex;
     flex-direction: row;
-    justify-content: space-evenly;
+    justify-content: space-around;
     margin: auto;
 }
 
@@ -14,7 +13,6 @@ label {
 }
 
 .nav-area ul {
-    // border: 1px solid $light;
     display: flex;
     flex-direction: row;
     justify-content: space-between;

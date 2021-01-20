@@ -45,10 +45,7 @@ class Trip {
         newTrip.post = this.createTripObject(newTrip)
         const totalCost =
           calculateLodgingCost(newTrip) + calculateFlightCost(newTrip)
-        newTrip.totalCost = totalCost.toLocaleString("en-US", {
-          style: "currency",
-          currency: "USD",
-        })
+        newTrip.totalCost = totalCost
         saveToLocalStorage(newTrip)
         return newTrip
       })

@@ -37,8 +37,25 @@ class Traveler {
     })
     return tripsData
   }
+
+  calculateAnnualSpend(currentTraveler) {
+    let currentYear = new Date()
+    let annualSpend = currentTraveler.trips.reduce((total, value) => {
+      let tripDate = new Date(value.date)
+      if (tripDate.getFullYear() === currentYear.getFullYear() - 1) {
+        total += value.totalCost
+      }
+      return total
+    }, 0)
+    document.querySelector(".total-spent")
+      .textContent = annualSpend.toLocaleString("en-US", {
+        style: "currency",
+        currency: "USD",
+      })
+  }
 }
 
 export const sortTrip = Traveler.prototype.sortTrip
 export const catalogueTrip = Traveler.prototype.catalogueTrip
+export const calculateAnnualSpend = Traveler.prototype.calculateAnnualSpend
 export default Traveler

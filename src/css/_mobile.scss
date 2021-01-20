@@ -1,5 +1,55 @@
-@media only screen and (max-width: 400px) {
+@media only screen and (max-width: 420px) {
+    
+    body {
+        background-color: $highlight
+    }
+
     header {
-        color: blue;
+        flex-direction: column;
+    }
+
+    .nav-area form {
+        display: grid;
+        grid-template-columns: 1fr;
+    }
+
+    label {
+        font-size: 90%;
+    }
+
+    .btn {
+        margin-top: 1em;
+    }
+
+    .container {
+        display: grid !important;
+        grid-template-columns: 1fr !important;
+        margin: auto !important;
+        width: 370px !important;
+    }
+
+    .traveler-name {
+        grid-column: 1 / 4;
+        margin: auto;
+        text-align: center;
+        font-size: 200%;
+        font-weight: 900;
+    }
+
+    .card {
+        margin: auto;
+    }
+
+    .modal-container {
+        align-items: self-end ;
+        height: 100vh;
+        width: 100vw;
+    }
+
+    .close {
+        position: absolute !important;
+        top: 0;
+        left: 0;
+        transform: none;
     }
 }

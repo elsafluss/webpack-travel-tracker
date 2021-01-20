@@ -115,14 +115,11 @@ export const showTripData = (tripData) => {
 export const displayPrice = () => {
   let newTrip = getFormData()
   showPrice.value = 'calculating ...'
-  console.log("newTrip", newTrip)
-  console.log("newTrip.totalCost", newTrip.totalCost)
-  let tripCost = newTrip.totalCost.toLocaleString("en-US", {
-    style: "currency",
-    currency: "USD",
-  })
-  console.log(tripCost)
   setTimeout(() => {
+    let tripCost = newTrip.totalCost.toLocaleString("en-US", {
+      style: "currency",
+      currency: "USD",
+    })
     document.querySelector(
       ".trip-price"
     ).textContent = `Estimated cost is ${tripCost}. Create this trip?`

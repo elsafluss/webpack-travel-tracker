@@ -115,8 +115,8 @@ export const showTripData = (tripData) => {
 export const displayPrice = () => {
   let newTrip = getFormData()
   showPrice.value = 'calculating ...'
-  console.log(newTrip)
-  console.log(newTrip.totalCost)
+  console.log("newTrip", newTrip)
+  console.log("newTrip.totalCost", newTrip.totalCost)
   let tripCost = newTrip.totalCost.toLocaleString("en-US", {
     style: "currency",
     currency: "USD",
@@ -138,4 +138,5 @@ showPrice.addEventListener("click", displayPrice)
 resetButton.addEventListener("click", () => {
   createTripButton.disabled = true
   createTripButton.classList.add("disabled")
+  document.querySelector(".trip-price").textContent = `Create a trip!`
 })

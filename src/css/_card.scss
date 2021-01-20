@@ -1,5 +1,4 @@
 .card {
-    // border: 1px solid $light;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
@@ -35,7 +34,6 @@
 }
 
 .card-header {
-    // border: 1px solid $light;
     padding: 1em;
     height: 2em;
     font-weight: 500;
@@ -45,7 +43,6 @@
 }
 
 .card-text {
-    // border: 1px solid $light;
     background-color: lighten($transparent, 10%);
     border-radius: 5px;
     height: auto;

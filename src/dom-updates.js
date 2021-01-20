@@ -1,4 +1,3 @@
-/* eslint-disable max-len */
 import {
   getDestinations,
   getTrips
@@ -10,7 +9,6 @@ import Trip, {
   pushTripToAPI
 } from "./trip.js"
 
-const tripForm = document.querySelector(".create-trip-form")
 const createTripButton = document.querySelector(".submit-form")
 const resetButton = document.querySelector(".reset")
 
@@ -107,8 +105,10 @@ export const showTripData = (tripData) => {
     document.querySelector(".traveler-count").innerText = ''
     document.querySelector('.friend-count').textContent = 'Just me,'
   } else {
-    document.querySelector(".traveler-count").innerText = `${tripData.travelers - 1}`
-    document.querySelector(".friend-count").textContent = " of my friends and me,"
+    document.querySelector(".traveler-count")
+      .innerText = `${tripData.travelers - 1}`
+    document.querySelector(".friend-count")
+      .textContent = " of my friends and me,"
   }
 }
 

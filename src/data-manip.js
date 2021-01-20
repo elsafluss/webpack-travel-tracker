@@ -1,4 +1,3 @@
-/* eslint-disable max-len */
 import Trip from "./trip"
 import Traveler, {
   catalogueTrip,
@@ -34,7 +33,7 @@ export const parseResults = (data, userID, event) => {
     sortTrip(trip, currentTraveler)
     displayTrips(trip)
   })
-  calculateAnnualSpend(currentTraveler) 
+  calculateAnnualSpend(currentTraveler)
   return currentTraveler
 }
 
@@ -52,7 +51,8 @@ export const getDestinationData = (destinations, trips) => {
 
 export const getFormData = () => {
   let userID = Number(document.querySelector(".traveler-name").id)
-  let date = document.querySelector(".create-trip-date").value.split("-").join("/")
+  let date = document.querySelector(".create-trip-date").value
+    .split("-").join("/")
   let newTrip = {
     userID,
     date,

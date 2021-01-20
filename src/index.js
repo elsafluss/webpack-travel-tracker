@@ -1,4 +1,4 @@
-import './css/base.scss';
+import './css/base.scss'
 import {
   getATraveler,
   getTrips,
@@ -12,7 +12,7 @@ import {
   displayUserName,
   showThisTrip
 } from "./dom-updates.js"
-let userID
+
 const loginButton = document.querySelector(".log-in")
 
 document.querySelector(".submit-form").addEventListener("click", getFormData)
@@ -23,7 +23,6 @@ const checkCredentials = (event) => {
   const password = document.querySelector(".password").value
   const userID = Number(username.slice(-2))
   if (username.includes("traveler") && password === "travel2020") {
-    // and check length of username
     document.querySelector(".main").classList.remove("hidden")
     let loginFields = document.querySelectorAll(".login")
     loginFields.forEach((field) => field.classList.add("hidden"))
@@ -54,6 +53,3 @@ export const onStartup = (userID) => {
     })
 }
 
-export {
-  userID as userID
-}

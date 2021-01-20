@@ -18,6 +18,7 @@ class Traveler {
     } else {
       traveler.pending.push(trip)
     }
+    return traveler.approved
   }
 
   catalogueTrip(trip, traveler) {
@@ -29,6 +30,7 @@ class Traveler {
       trip.future = false
       traveler.pastTrips.push(trip)
     }
+    return traveler.futureTrips
   }
 
   sortTripsByDate(date, userID) {
@@ -52,6 +54,7 @@ class Traveler {
         style: "currency",
         currency: "USD",
       })
+    return annualSpend
   }
 }
 

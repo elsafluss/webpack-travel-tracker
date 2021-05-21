@@ -29,3 +29,10 @@ I built this with 8 fingers, 6 days, Webpack, Sass, JavaScript, PG Tips tea, a h
 I listened to [this Prodigy Album](https://open.spotify.com/album/05yevdRXvaX6KGRaZehaDW?si=gfFOWavmQemIGf9sEPmIPA) nonstop for three days to build this site. Highly recommend.
 
 I got the background image from Pexels.
+
+
+
+
+This was the first solo project that I did at Turing that really made me feel like a software engineer. I had to solve all the problems myself, which was good because I created most of them :)
+
+I was proud of the local storage solution for holding the current trip's data between the time when the user calculates the trip's cost and when they book the trip.
